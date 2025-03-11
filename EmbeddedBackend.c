@@ -38,6 +38,7 @@ char stopbyte = 0xAA;
 unsigned char instruction;
 unsigned char lsb = 0b00;
 unsigned char msb = 0b00;
+int sixteenbit;
 
 //define channels
 #define p02 0b01100001
@@ -47,7 +48,7 @@ unsigned char msb = 0b00;
 
 
 //enable reading inputs from selected channel and outputs completed conversion
-void readADC(char channel)
+char readADC(char channel)
 {
 	ADMUX = channel;
 	startConversion;
@@ -90,40 +91,37 @@ void setPORTC(unsigned char lsb){
 	UDR1 = 0x0A;
 }
 
-void setHeater(unsigned char lsb, unsigned char msb){
-	OCR1CH = msb;
-	OCR1CL = lsb;
+void setHeater(int sixteenbit){
+	OCR1C = sixteenbit;
 	UDR1 = 0x0B;
 }
 
-void setLight(unsigned char lsb, unsigned char msb){
-	OCR1BH = msb;
-	OCR1BL = lsb;
+void setLight(int sixteenbit){
+	OCR1B = sixteenbit;
 	UDR1 = 0x0C;
 }
 
-void setMotor(unsigned char lsb, unsigned char msb){
-	OCR1AH = msb;
-	OCR1AL = lsb;
+void setMotor(int sixteenbit){
+	OCR1A = sixteenbit;
 	UDR1 = 0x0D;
 }
 
 /////////READ/WRITE FUNCTIONS END //////////
 
 
-void write(unsigned char instruction, unsigned char lsb, unsigned char msb){ //write functions
+void write(unsigned char instruction, unsigned char lsb, int sixteenbit){ //write functions
 	switch(instruction){
 		case 0x0A:
 			setPORTC(lsb);
 			break;
 		case 0x0B:
-			setHeater(lsb,msb);
+			setHeater(sixteenbit);
 			break;	
 		case 0x0C:
-			setLight(lsb,msb);
+			setLight(sixteenbit);
 			break;	
 		case 0x0D:
-			setMotor(lsb,msb);
+			setMotor(sixteenbit);
 			break;
 	}
 }
@@ -191,6 +189,7 @@ ISR(USART1_RX_vect){ //receive interrupt
 	
 		case logMSB://log msb and check stop byte received
 			msb = *receiveByte;
+			sixteenbit = (msb<<8)+lsb;
 			readorwrite = 1;
 			mode = checkstop;
 			break;
@@ -204,7 +203,7 @@ ISR(USART1_RX_vect){ //receive interrupt
 					break;
 				
 				case 1:
-					write(instruction, lsb, msb);//pass instruction, lsb and msb to function
+					write(instruction, lsb, sixteenbit);//pass instruction, lsb and msb to function
 					mode = initialise;//return to waiting state	
 					break;	
 				
@@ -256,6 +255,6 @@ int main(void)
 	setup();
     while (1) 
     {
-		setMotor(readADC(p02), readADC(p01));
+		setLight(p01);
     }
 }

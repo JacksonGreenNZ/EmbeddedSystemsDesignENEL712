@@ -8,7 +8,7 @@
 
 /*TO DO
 
-1. adc conversion could probably send through tx after conversion instead of relying on read function - reduces repition
+1. adc conversion could probably send through tx after conversion instead of relying on read function - reduces repetition
 2. log lsb and msb for write function
 
 
@@ -54,91 +54,21 @@ char *receiveByte;
 #define instruct 1
 #define logLSB 2
 #define logMSB 3
+#define checkstop 6
 unsigned char mode;
-char startbyte = 0x53;  
+unsigned char readorwrite;
+char startbyte = 0x53;
+char stopbyte = 0xAA;  
 
-unsigned char lsb;
-unsigned char msb;
+unsigned char instruction;
+unsigned char lsb = 0b00;
+unsigned char msb = 0b00;
 
-ISR(USART1_RX_vect){
-	*receiveByte = UDR1;
-	switch(mode){
-		case initialise:
-			if(*receiveByte == startbyte){
-				mode =  instruct;
-			} 
-		break;
-		case instruct:
-			if(*receiveByte<0x0A){
-				read()
-				mode = initialise
-				break;
-			}
-			write(*receiveByte);
-			break;
-		case logLSB:
-			lsb = *receiveByte;
-			mode = logMSB;
-			break;
-		case logMSB:
-			msb = *receiveByte;
-			mode 
-			
-	}	
-	
-
-}
-
-char write(char writetype){
-	//use this to work out which type of write is needed, 
-}
-
-char read(char instruction){
-		switch(instruction){
-			case 0x00:
-				txCheck();
-				break;
-			case 0x01:
-				readPINA();
-			case 0x02:
-				readPOT1()
-			case 0x03:
-				readPOT2()
-			case 0x04:
-				readTemp()
-			case 0x05:
-				readLight()
-		}
-}
-
-char txCheck(){
-	//send 0x0F over udr1;
-}
-
-char readPINA(){
-	//send pina over udr1;
-}
-
-char readPOT1(){
-	//adc conv channel 1
-	//send adch over udr1;
-}
-
-char readPOT2(){
-	//adc conv channel 0;
-	//send adch over udr1;
-}
-
-char readTemp(){
-	//adc conv channel 3?
-	//send adch over udr1;
-}
-
-char readLight(){
-	//adc conv channel 4?
-	//send adch over udr1;
-}
-
+//define channels
+#define p02 0b01100001
+#define p01 0b01100010
+#define thermometre 0b01100011
+#define lightsensor 0b01100000
 
 //enable reading inputs from selected channel and outputs completed conversion
 char readADC(char channel)
@@ -151,10 +81,173 @@ char readADC(char channel)
 	return(ADCH);
 }
 
+/////////READ FUNCTIONS BEGIN //////////
+void txCheck(){
+	PORTC = 0x0F;
+}
+
+void readPINA(){
+	PORTC=PINA;
+}
+
+void readPOT1(){
+	PORTC = readADC(p01);
+}
+
+void readPOT2(){
+	PORTC = readADC(p02);
+}
+
+void readTemp(){
+	PORTC = readADC(thermometre);
+}
+
+void readLight(){
+	PORTC = readADC(lightsensor);
+}
+
+
+/////////WRITE FUNCTIONS BEGIN //////////
+char setPORTC(unsigned char lsb){
+	//write the 8 LSB to PORTC, return 0x0A over udr1
+	PORTC = PINA;
+	UDR1 = 0x0A;
+}
+
+char setHeater(unsigned char lsb){
+	OCR1C = lsb;
+	UDR1 = 0x0B;
+}
+
+char setLight(unsigned char lsb){
+	OCR1B = lsb;
+	UDR1 = 0x0C;
+}
+
+char setMotor(unsigned char lsb, unsigned char msb){
+	//prescaler needs to be super high for 0-65k range
+	//OCR1A = ;
+	UDR1 = 0x0D;
+}
+
+/////////READ/WRITE FUNCTIONS END //////////
+
+
+char write(instruction, lsb, msb){ //write functions
+	switch(instruction){
+		case 0x0A:
+			setPORTC(lsb);
+			break;
+		case 0x0B:
+			setHeater(lsb);
+			break;	
+		case 0x0C:
+			setLight(lsb);
+			break;	
+		case 0x0D:
+			setMotor(lsb,msb);
+			break;
+	}
+}
+
+char read(instruction){//read functions
+		switch(instruction){
+			case 0x00:
+				txCheck();
+				break;
+			case 0x01:
+				readPINA();
+				break;
+			case 0x02:
+				readPOT1();
+				break;
+			case 0x03:
+				readPOT2();
+				break;
+			case 0x04:
+				readTemp();
+				break;
+			case 0x05:
+				readLight();
+				break;
+		}
+}
+
+////////INTERRUPT///////////
+
+ISR(USART1_RX_vect){ //receive interrupt
+	*receiveByte = UDR1;//pointer to current byte
+	
+	switch(mode){
+	
+		case initialise:
+			//reset variables
+			instruction = 0;
+			readorwrite = 2;
+			lsb = 0;
+			msb = 0; 
+			
+			if(*receiveByte == startbyte){ //if the received byte is 0x53
+				mode =  instruct; //standby for instruction byte
+			} 
+		break;
+	
+		case instruct:
+			instruction = *receiveByte; //save as instruction
+			if(*receiveByte<0x0A){ //if received byte is read instruction
+				
+				readorwrite = 0; //select the right function
+				mode = checkstop; //check if stop byte received
+			}
+			
+			else{
+				mode = logLSB; //otherwise jump to logging least significant bit for writing
+			}
+			
+			break;
+		
+		case logLSB:// log lsb
+			lsb = *receiveByte;
+			mode = logMSB;
+			break;
+	
+		case logMSB://log msb and check stop byte received
+			msb = *receiveByte;
+			readorwrite = 1;
+			mode = checkstop;
+			break;
+		
+		case checkstop:
+			if(*receiveByte == stopbyte){// if the stop byte is received continue
+				switch(readorwrite){
+				case 0:
+					read(instruction);//pass instruction to function
+					mode = initialise;//return to waiting state
+					break;
+				
+				case 1:
+					write(instruction, lsb, msb);//pass instruction, lsb and msb to function
+					mode = initialise;//return to waiting state	
+					break;	
+				
+				default://error handling
+					mode = initialise;
+					break;
+				}
+			}
+			
+			else{//if no stop byte received, reset
+				mode = initialise;
+			}	
+			break;
+	}		
+}
+
+///////////SETUP///////////
 
 void setup(){
 	DDRC = 0xFF;//all leds as output
-	DDRB |= (1<<DDB6);//lamp as output
+	DDRB = 0b11100000;//fan/lamp/heater as output
 	
 	//start off
 	PORTC = 0x00;
@@ -165,19 +258,21 @@ void setup(){
 	PORTE = 0b00000000;
 	DDRA = 0;
 
-	ADCSRA = 0b11100111;
+	ADCSRA = 0b10000111;
 	
 	cli();
 	sei();
+	//start with certain conditions
 	mode = initialise;
+	readorwrite = 2;
 }
+
+/////////MAIN/////////
 
 int main(void)
 {
-	setup()
-    /* Replace with your application code */
+	setup();
     while (1) 
     {
     }
 }
-

@@ -5,36 +5,10 @@
  * Author : qtr1230
  */ 
 
-
-/*TO DO
-
-1. adc conversion could probably send through tx after conversion instead of relying on read function - reduces repetition
-2. log lsb and msb for write function
-
-
-
-
-
-
-*/
-
-/*
+/*NOTES
 isr(usart1_rx_vect) is the key interrupt, while(1) shouldn't contain much
-
-0x53 starts contact
-instruction pin (0x01-5 is read, A-D is write)
-for write send MSB and LSB
-stop bit 0xAA
-
-Motor (OCR1A)
-Lamp (OCR1B)
-Heater (OCR1C)
-
-interrupt come after every time receive data due to stop byte bullshit
-
-ONLY DO BASIC LOGIC FOR INSTRUCTIONS ON C
+ DO BASIC LOGIC FOR INSTRUCTIONS ON C
 LOGIC HANDLED BY C SHARP
-
 */
 
 #define F_CPU 8000000UL
@@ -60,6 +34,7 @@ unsigned char readorwrite;
 char startbyte = 0x53;
 char stopbyte = 0xAA;  
 
+//data information
 unsigned char instruction;
 unsigned char lsb = 0b00;
 unsigned char msb = 0b00;
@@ -70,15 +45,16 @@ unsigned char msb = 0b00;
 #define thermometre 0b01100011
 #define lightsensor 0b01100000
 
+
 //enable reading inputs from selected channel and outputs completed conversion
-char readADC(char channel)
+void readADC(char channel)
 {
 	ADMUX = channel;
 	startConversion;
 	
 	while(conversionRunning);
 
-	return(ADCH);
+	return(ADCH);//change this to send over usart, currently returning so testable
 }
 
 /////////READ FUNCTIONS BEGIN //////////
@@ -87,62 +63,64 @@ void txCheck(){
 }
 
 void readPINA(){
-	PORTC=PINA;
+	UDR1=PINA;
 }
 
 void readPOT1(){
-	PORTC = readADC(p01);
+	UDR1 = readADC(p01);
 }
 
 void readPOT2(){
-	PORTC = readADC(p02);
+	UDR1 = readADC(p02);
 }
 
 void readTemp(){
-	PORTC = readADC(thermometre);
+	UDR1 = readADC(thermometre);
 }
 
 void readLight(){
-	PORTC = readADC(lightsensor);
+	UDR1 = readADC(lightsensor);
 }
 
 
 /////////WRITE FUNCTIONS BEGIN //////////
-char setPORTC(unsigned char lsb){
+void setPORTC(unsigned char lsb){
 	//write the 8 LSB to PORTC, return 0x0A over udr1
-	PORTC = PINA;
+	PORTC = lsb;
 	UDR1 = 0x0A;
 }
 
-char setHeater(unsigned char lsb){
-	OCR1C = lsb;
+void setHeater(unsigned char lsb, unsigned char msb){
+	OCR1CH = msb;
+	OCR1CL = lsb;
 	UDR1 = 0x0B;
 }
 
-char setLight(unsigned char lsb){
-	OCR1B = lsb;
+void setLight(unsigned char lsb, unsigned char msb){
+	OCR1BH = msb;
+	OCR1BL = lsb;
 	UDR1 = 0x0C;
 }
 
-char setMotor(unsigned char lsb, unsigned char msb){
-	//prescaler needs to be super high for 0-65k range
-	//OCR1A = ;
+void setMotor(unsigned char lsb, unsigned char msb){
+	OCR1AH = msb;
+	OCR1AL = lsb;
 	UDR1 = 0x0D;
 }
 
 /////////READ/WRITE FUNCTIONS END //////////
 
 
-char write(instruction, lsb, msb){ //write functions
+void write(unsigned char instruction, unsigned char lsb, unsigned char msb){ //write functions
 	switch(instruction){
 		case 0x0A:
 			setPORTC(lsb);
 			break;
 		case 0x0B:
-			setHeater(lsb);
+			setHeater(lsb,msb);
 			break;	
 		case 0x0C:
-			setLight(lsb);
+			setLight(lsb,msb);
 			break;	
 		case 0x0D:
 			setMotor(lsb,msb);
@@ -150,7 +128,7 @@ char write(instruction, lsb, msb){ //write functions
 	}
 }
 
-char read(instruction){//read functions
+void read(unsigned instruction){//read functions
 		switch(instruction){
 			case 0x00:
 				txCheck();
@@ -257,8 +235,12 @@ void setup(){
 	DDRE = 3;
 	PORTE = 0b00000000;
 	DDRA = 0;
-
+	//conversion
 	ADCSRA = 0b10000111;
+	
+	//fastpwm 8 bit, top = irc1 = 399
+	TCCR1A = 0b10100101;
+	TCCR1B = 0b00000001;
 	
 	cli();
 	sei();
@@ -274,5 +256,6 @@ int main(void)
 	setup();
     while (1) 
     {
+		setMotor(readADC(p02), readADC(p01));
     }
 }

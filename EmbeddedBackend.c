@@ -60,7 +60,7 @@ char readADC(char channel)
 
 /////////READ FUNCTIONS BEGIN //////////
 void txCheck(){
-	PORTC = 0x0F;
+	UDR1 = 0x0F;
 }
 
 void readPINA(){

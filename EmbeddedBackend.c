@@ -243,6 +243,11 @@ void setup(){
 	
 	cli();
 	sei();
+	
+	UCSR1B = 0b10011000; //usart tx/rx on, enable recieve complete interrupt 
+	UCSR1C = 0b00000110;//async no parity bit, 1 stop bit, 8 bit char size
+	UBRR1L = 12; //38400 buad
+	
 	//start with certain conditions
 	mode = initialise;
 	readorwrite = 2;
@@ -255,6 +260,5 @@ int main(void)
 	setup();
     while (1) 
     {
-		setLight(p01);
     }
 }

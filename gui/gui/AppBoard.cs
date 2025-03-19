@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
@@ -10,11 +10,19 @@ namespace gui
 {
     internal class AppBoard
     {
-        private SerialPort serialPort;
+        public SerialPort serialPort;
+        byte startByte = 0x53;
+        byte stopByte = 0xAA;
+        private string comPort;
 
-        public AppBoard(SerialPort port)
+        public AppBoard()
         {
-            serialPort = port;
+            serialPort = new SerialPort();
+        }
+
+        public string[] getCOMs()
+        {
+            return SerialPort.GetPortNames();
         }
 
         public void Connect(string portName, int baudRate)
@@ -39,16 +47,27 @@ namespace gui
             }
         }
 
-        public void ReadPINA()
+        private static readonly object serialLock = new object();
+
+        public byte ReadPINA()
         {
-            byte[] ReadPINA = { 0x53, 0x01, 0xAA };
-            serialPort.Write(ReadPINA, 0, ReadPINA.Length);
+            lock (serialLock)
+            {
+                byte[] ReadPINA = { startByte, 0x01, stopByte };
+                serialPort.Write(ReadPINA, 0, ReadPINA.Length);
+                int response = serialPort.ReadByte();
+                return (byte)response;
+            }
         }
 
-        public void WritePORTC(byte msb, byte lsb)
+        public void WritePORTC(byte lsb)
         {
-            byte[] WritePORTC = { 0x53, 0xA, msb, lsb, 0xAA };
-            serialPort.Write(WritePORTC, 0, WritePORTC.Length);
+            lock (serialLock)
+            {
+                byte chaff = 0xff;
+                byte[] WritePORTC = { startByte, 0xA, lsb, chaff, stopByte };
+                serialPort.Write(WritePORTC, 0, WritePORTC.Length);
+            }
         }
     }
 }

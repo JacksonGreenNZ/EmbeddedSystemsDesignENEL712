@@ -5,12 +5,6 @@
  * Author : qtr1230
  */ 
 
-/*NOTES
-isr(usart1_rx_vect) is the key interrupt, while(1) shouldn't contain much
- DO BASIC LOGIC FOR INSTRUCTIONS ON C
-LOGIC HANDLED BY C SHARP
-*/
-
 #define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -19,7 +13,7 @@ LOGIC HANDLED BY C SHARP
 #define startConversion ADCSRA |= (1<<6) //initiates conversion
 #define conversionRunning ADCSRA & (1<<6) //bit is cleared on conversion complete
 #define tx_buffer_empty (UCSR1A & (1<<UDRE1)) //nothing in transmit buffer
-//while (!tx_buffer_empty);//wait for transmitter to fill up USE LATER
+//while (!tx_buffer_empty);//wait for transmitter to fill up
 
 char *receiveByte;
 
@@ -152,6 +146,7 @@ void read(unsigned instruction){//read functions
 ////////INTERRUPT///////////
 
 ISR(USART1_RX_vect){ //receive interrupt
+	
 	*receiveByte = UDR1;//pointer to current byte
 	
 	switch(mode){
@@ -189,7 +184,7 @@ ISR(USART1_RX_vect){ //receive interrupt
 	
 		case logMSB://log msb and check stop byte received
 			msb = *receiveByte;
-			sixteenbit = (msb<<8)+lsb;
+			sixteenbit = (msb<<8)|lsb;
 			readorwrite = 1;
 			mode = checkstop;
 			break;
@@ -237,9 +232,13 @@ void setup(){
 	//conversion
 	ADCSRA = 0b10000111;
 	
-	//fastpwm 8 bit, top = irc1 = 399
-	TCCR1A = 0b10100101;
-	TCCR1B = 0b00000001;
+	//TCCR1A = 0b10100101;
+	//TCCR1B = 0b00000001;
+	
+	//toms tcc setup
+	TCCR1A = 0b10101010;
+	TCCR1B = 0b00011001;
+	ICR1 = 399;
 	
 	cli();
 	sei();
@@ -258,7 +257,5 @@ void setup(){
 int main(void)
 {
 	setup();
-    while (1) 
-    {
-    }
+    while (1){}
 }

@@ -34,6 +34,7 @@ namespace gui
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.serialPortStatusLED = new Bulb.LedBulb();
             this.disconnectButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
             this.baudRateDropdown = new System.Windows.Forms.ComboBox();
@@ -59,17 +60,6 @@ namespace gui
             this.tickPC0 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.portsLightsPage = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lampPercentDisplay = new System.Windows.Forms.TextBox();
-            this.lampIntensityScroll = new System.Windows.Forms.VScrollBar();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tempControl = new System.Windows.Forms.TabPage();
-            this.serialPort = new System.IO.Ports.SerialPort(this.components);
-            this.appTimer = new System.Windows.Forms.Timer(this.components);
-            this.serialPortStatusLED = new Bulb.LedBulb();
             this.pa4LED = new Bulb.LedBulb();
             this.pa5LED = new Bulb.LedBulb();
             this.pa3LED = new Bulb.LedBulb();
@@ -80,9 +70,19 @@ namespace gui
             this.pa0LED = new Bulb.LedBulb();
             this.sevenSegment2 = new DmitryBrant.CustomControls.SevenSegment();
             this.sevenSegment1 = new DmitryBrant.CustomControls.SevenSegment();
+            this.portsLightsPage = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lampPercentDisplay = new System.Windows.Forms.TextBox();
+            this.lampIntensityScroll = new System.Windows.Forms.VScrollBar();
             this.lightDisplay = new AquaControls.AquaGauge();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pot2VoltageDisplay = new AquaControls.AquaGauge();
             this.pot1VoltageDisplay = new AquaControls.AquaGauge();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tempControl = new System.Windows.Forms.TabPage();
+            this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            this.appTimer = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.setupPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -151,6 +151,15 @@ namespace gui
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Serial Port Status";
+            // 
+            // serialPortStatusLED
+            // 
+            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
+            this.serialPortStatusLED.Name = "serialPortStatusLED";
+            this.serialPortStatusLED.On = true;
+            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
+            this.serialPortStatusLED.TabIndex = 6;
+            this.serialPortStatusLED.Text = "ledBulb1";
             // 
             // disconnectButton
             // 
@@ -425,97 +434,6 @@ namespace gui
             this.label4.TabIndex = 0;
             this.label4.Text = "PINA";
             // 
-            // portsLightsPage
-            // 
-            this.portsLightsPage.Controls.Add(this.groupBox4);
-            this.portsLightsPage.Controls.Add(this.groupBox3);
-            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
-            this.portsLightsPage.Name = "portsLightsPage";
-            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.portsLightsPage.Size = new System.Drawing.Size(428, 616);
-            this.portsLightsPage.TabIndex = 2;
-            this.portsLightsPage.Text = "Ports-Lights";
-            this.portsLightsPage.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.lampPercentDisplay);
-            this.groupBox4.Controls.Add(this.lampIntensityScroll);
-            this.groupBox4.Controls.Add(this.lightDisplay);
-            this.groupBox4.Location = new System.Drawing.Point(6, 322);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(416, 288);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Light";
-            // 
-            // lampPercentDisplay
-            // 
-            this.lampPercentDisplay.Location = new System.Drawing.Point(139, 225);
-            this.lampPercentDisplay.Name = "lampPercentDisplay";
-            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
-            this.lampPercentDisplay.TabIndex = 6;
-            // 
-            // lampIntensityScroll
-            // 
-            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 55);
-            this.lampIntensityScroll.Name = "lampIntensityScroll";
-            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
-            this.lampIntensityScroll.TabIndex = 5;
-            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
-            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(416, 310);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Ports";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(227, 31);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(147, 25);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Pot2 Voltage";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(36, 31);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(147, 25);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Pot1 Voltage";
-            // 
-            // tempControl
-            // 
-            this.tempControl.Location = new System.Drawing.Point(4, 22);
-            this.tempControl.Name = "tempControl";
-            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tempControl.Size = new System.Drawing.Size(428, 616);
-            this.tempControl.TabIndex = 3;
-            this.tempControl.Text = "Temp Control";
-            this.tempControl.UseVisualStyleBackColor = true;
-            // 
-            // serialPortStatusLED
-            // 
-            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
-            this.serialPortStatusLED.Name = "serialPortStatusLED";
-            this.serialPortStatusLED.On = true;
-            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
-            this.serialPortStatusLED.TabIndex = 6;
-            this.serialPortStatusLED.Text = "ledBulb1";
-            // 
             // pa4LED
             // 
             this.pa4LED.Color = System.Drawing.Color.Red;
@@ -626,14 +544,53 @@ namespace gui
             this.sevenSegment1.TabStop = false;
             this.sevenSegment1.Value = null;
             // 
+            // portsLightsPage
+            // 
+            this.portsLightsPage.Controls.Add(this.groupBox4);
+            this.portsLightsPage.Controls.Add(this.groupBox3);
+            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
+            this.portsLightsPage.Name = "portsLightsPage";
+            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.portsLightsPage.Size = new System.Drawing.Size(428, 616);
+            this.portsLightsPage.TabIndex = 2;
+            this.portsLightsPage.Text = "Ports-Lights";
+            this.portsLightsPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lampPercentDisplay);
+            this.groupBox4.Controls.Add(this.lampIntensityScroll);
+            this.groupBox4.Controls.Add(this.lightDisplay);
+            this.groupBox4.Location = new System.Drawing.Point(6, 322);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(416, 288);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Light";
+            // 
+            // lampPercentDisplay
+            // 
+            this.lampPercentDisplay.Location = new System.Drawing.Point(139, 225);
+            this.lampPercentDisplay.Name = "lampPercentDisplay";
+            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
+            this.lampPercentDisplay.TabIndex = 6;
+            // 
+            // lampIntensityScroll
+            // 
+            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 55);
+            this.lampIntensityScroll.Name = "lampIntensityScroll";
+            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
+            this.lampIntensityScroll.TabIndex = 5;
+            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
+            // 
             // lightDisplay
             // 
             this.lightDisplay.BackColor = System.Drawing.Color.Transparent;
             this.lightDisplay.DialColor = System.Drawing.Color.Lavender;
-            this.lightDisplay.DialText = null;
+            this.lightDisplay.DialText = "Measured";
             this.lightDisplay.Glossiness = 11.36364F;
             this.lightDisplay.Location = new System.Drawing.Point(224, 55);
-            this.lightDisplay.MaxValue = 0F;
+            this.lightDisplay.MaxValue = 255F;
             this.lightDisplay.MinValue = 0F;
             this.lightDisplay.Name = "lightDisplay";
             this.lightDisplay.RecommendedValue = 0F;
@@ -642,14 +599,27 @@ namespace gui
             this.lightDisplay.ThresholdPercent = 0F;
             this.lightDisplay.Value = 0F;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
+            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(416, 310);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ports";
+            // 
             // pot2VoltageDisplay
             // 
             this.pot2VoltageDisplay.BackColor = System.Drawing.Color.Transparent;
             this.pot2VoltageDisplay.DialColor = System.Drawing.Color.Lavender;
-            this.pot2VoltageDisplay.DialText = null;
+            this.pot2VoltageDisplay.DialText = "Potentiometer 2";
             this.pot2VoltageDisplay.Glossiness = 11.36364F;
             this.pot2VoltageDisplay.Location = new System.Drawing.Point(225, 95);
-            this.pot2VoltageDisplay.MaxValue = 0F;
+            this.pot2VoltageDisplay.MaxValue = 5F;
             this.pot2VoltageDisplay.MinValue = 0F;
             this.pot2VoltageDisplay.Name = "pot2VoltageDisplay";
             this.pot2VoltageDisplay.RecommendedValue = 0F;
@@ -662,10 +632,10 @@ namespace gui
             // 
             this.pot1VoltageDisplay.BackColor = System.Drawing.Color.Transparent;
             this.pot1VoltageDisplay.DialColor = System.Drawing.Color.Lavender;
-            this.pot1VoltageDisplay.DialText = null;
+            this.pot1VoltageDisplay.DialText = "Potentiometer 1";
             this.pot1VoltageDisplay.Glossiness = 11.36364F;
             this.pot1VoltageDisplay.Location = new System.Drawing.Point(34, 95);
-            this.pot1VoltageDisplay.MaxValue = 0F;
+            this.pot1VoltageDisplay.MaxValue = 5F;
             this.pot1VoltageDisplay.MinValue = 0F;
             this.pot1VoltageDisplay.Name = "pot1VoltageDisplay";
             this.pot1VoltageDisplay.RecommendedValue = 0F;
@@ -673,6 +643,36 @@ namespace gui
             this.pot1VoltageDisplay.TabIndex = 2;
             this.pot1VoltageDisplay.ThresholdPercent = 0F;
             this.pot1VoltageDisplay.Value = 0F;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(227, 31);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(147, 25);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Pot2 Voltage";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(36, 31);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(147, 25);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Pot1 Voltage";
+            // 
+            // tempControl
+            // 
+            this.tempControl.Location = new System.Drawing.Point(4, 22);
+            this.tempControl.Name = "tempControl";
+            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tempControl.Size = new System.Drawing.Size(428, 616);
+            this.tempControl.TabIndex = 3;
+            this.tempControl.Text = "Temp Control";
+            this.tempControl.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -755,4 +755,3 @@ namespace gui
         private System.Windows.Forms.Timer appTimer;
     }
 }
-

@@ -21,7 +21,8 @@ namespace gui
     {
         private AppBoard appBoard;
         private EventHandler ev;
-        private double integral = 0;
+        private double integral;
+        private int x;
         public Form1()
         {
             appBoard = new AppBoard();
@@ -80,6 +81,8 @@ namespace gui
                     break;
 
                 case 3: // Temp Tab
+                    x = 0;
+                    integral = 0;
                     UpdateTimerEvent(temp_tick);
                     break;
             }
@@ -231,6 +234,7 @@ namespace gui
             float pot2DispVal = (5 * (float)appBoard.ReadPotV(1)) / 255;
             pot2VoltageDisplay.Value = pot2DispVal;
             pot2VoltageDisplay.RecommendedValue = pot2DispVal;
+            pot1VoltageDisplay.RecommendedValue = pot1DispVal;
         }
         
         private void lampIntensityScroll_Scroll(object sender, ScrollEventArgs e)
@@ -242,6 +246,7 @@ namespace gui
         {
             int lightDispVal = appBoard.ReadLight();
             lightDisplay.Value = lightDispVal;
+            lightDisplay.RecommendedValue = lightDispVal;
         }
 
         void lampScroll()
@@ -277,17 +282,20 @@ namespace gui
         void piLogic(double desiredTemp, int kp, int ki)
         {
             double currentTemp = appBoard.ReadTemp();
+
+            tempChart.Series[0].Points.AddXY(x++, currentTemp);
             double error = desiredTemp - currentTemp;
 
-            if (Math.Abs(error) > 0.1)
+            if (Math.Abs(error) > 0.01)
             {
-
                 double proportional = kp * error;
                 integral += error;
+                integral = Clamp(integral, -1000, 1000);  // Limiting the integral windup
                 double integralTerm = ki * integral;
-
                 double output = proportional + integralTerm;
-                output = Clamp(output, 0, 65535);
+
+                output = Math.Abs(output);
+                output = Clamp(output, 0, 399);
 
                 ushort pwmValue = (ushort)output;
                 byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
@@ -315,7 +323,6 @@ namespace gui
             int ki = (int)kiTuning.Value;
             piLogic(desiredTemp, kp, ki);
         }
-          
     }
 }
 

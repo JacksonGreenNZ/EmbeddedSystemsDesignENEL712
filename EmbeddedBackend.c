@@ -189,7 +189,7 @@ ISR(USART1_RX_vect){ //receive interrupt
 	
 		case logMSB://log msb and check stop byte received
 			msb = *receiveByte;
-			sixteenbit = (msb<<8)+lsb;
+			sixteenbit = lsb+(msb<<8);//fixed was msb+lsb
 			readorwrite = 1;
 			mode = checkstop;
 			break;
@@ -237,9 +237,14 @@ void setup(){
 	//conversion
 	ADCSRA = 0b10000111;
 	
-	//fastpwm 8 bit, top = irc1 = 399
-	TCCR1A = 0b10100101;
-	TCCR1B = 0b00000001;
+	//pwm toms settings
+	TCCR1A = 0b10101010;
+	TCCR1B = 0b00011001;
+	ICR1 = 399;
+	
+	//fastpwm 8 bit, top = irc1 = 399 old settings
+	//TCCR1A = 0b10100101;
+	//TCCR1B = 0b00000001;
 	
 	cli();
 	sei();
@@ -260,6 +265,5 @@ int main(void)
 	setup();
     while (1) 
     {
-		PORTC = 0xff;
     }
 }

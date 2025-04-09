@@ -29,8 +29,8 @@ namespace gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.setupPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -609,17 +609,17 @@ namespace gui
             // 
             // tempChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea2);
             this.tempChart.Location = new System.Drawing.Point(131, 47);
             this.tempChart.Name = "tempChart";
             this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.IsXValueIndexed = true;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 4;
-            this.tempChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.IsXValueIndexed = true;
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series2);
             this.tempChart.Size = new System.Drawing.Size(292, 300);
             this.tempChart.TabIndex = 2;
             this.tempChart.Text = "chart1";
@@ -809,6 +809,11 @@ namespace gui
             this.kiTuning.Size = new System.Drawing.Size(73, 20);
             this.kiTuning.TabIndex = 12;
             this.kiTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.kiTuning.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // kpTuning
             // 
@@ -817,6 +822,11 @@ namespace gui
             this.kpTuning.Size = new System.Drawing.Size(73, 20);
             this.kpTuning.TabIndex = 13;
             this.kpTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.kpTuning.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // setpointTemp
             // 
@@ -825,6 +835,11 @@ namespace gui
             this.setpointTemp.Size = new System.Drawing.Size(100, 20);
             this.setpointTemp.TabIndex = 14;
             this.setpointTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.setpointTemp.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 

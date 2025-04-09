@@ -145,9 +145,13 @@ namespace gui
         {
             byte lsb = value[0];
             byte msb = value[1];
-            byte[] Writefan = { startByte, 0x0D, lsb, msb, stopByte };
+            byte[] Writefan = { startByte, 0x0D, lsb, msb, stopByte};
             serialPort.Write(Writefan, 0, Writefan.Length);
             int response = serialPort.ReadByte();
+            if (response != 0x0D)
+            {
+                MessageBox.Show("Wrong return (Fan)");
+            }
         }
 
         public void WriteHeat(byte[] value)
@@ -157,6 +161,10 @@ namespace gui
             byte[] Writeheat = { startByte, 0x0B, lsb, msb, stopByte };
             serialPort.Write(Writeheat, 0, Writeheat.Length);
             int response = serialPort.ReadByte();
+            if(response!= 0x0B)
+            {
+                MessageBox.Show("Wrong return (Heat)");
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.IO.Ports;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
+using System.CodeDom;
 
 namespace gui
 {
@@ -79,14 +80,11 @@ namespace gui
                     break;
 
                 case 3: // Temp Tab
-                    //UpdateTimerEvent(temp_tick);
+                    UpdateTimerEvent(temp_tick);
                     break;
             }
         }
-        private void lampIntensityScroll_Scroll(object sender, ScrollEventArgs e)
-        {
-            lampPercentDisplay.Text = ((100*lampIntensityScroll.Value)/255).ToString() + "%";
-        }
+        
 
         // SETUP PAGE //
 
@@ -99,21 +97,47 @@ namespace gui
         {
             try
             {
-                //Backend: connect
-                int baudint = 0; //initialise baud rate
-                Int32.TryParse(baudRateDropdown.Text, out baudint); //convert baudrate string from dropdown to int
-                appBoard.Connect(comPortDropdown.Text, baudint); //pass baud rate and comport to appboard function connecting
+                int baudint = 0;
+                Int32.TryParse(baudRateDropdown.Text, out baudint);
 
-                //UI: turn on disconnect button and turn off connect button, light connected LED
-                disconnectButton.Enabled = true; 
+                // Disable UI to avoid double-clicking while connecting
                 connectButton.Enabled = false;
-                serialPortStatusLED.On = true;
+
+                // Trigger async connect with a callback
+                appBoard.Connect(comPortDropdown.Text, baudint, () =>
+                {
+                    // Called from background thread, so invoke UI-safe changes
+                    if (InvokeRequired)
+                    {
+                        Invoke(new Action(UIConnectResponse));
+                    }
+                    else
+                    {
+                        connectButton.Enabled = true;//turn back on if txcheck fails
+                        UIConnectResponse();
+                    }
+                });
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error Connecting: {ex.Message}");
             }
-        }         
+        }
+
+        private void UIConnectResponse()
+        {
+            if(appBoard.checkTx()== 0x0F)
+            {
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                connectButton.Enabled = false;
+                serialPortStatusLED.On = true;
+            }
+            else
+            {
+                MessageBox.Show($"Error Connecting: Wrong byte recieved");
+            }
+        }
 
         private void disconnectButton_Click(object sender, EventArgs e)
         {
@@ -206,17 +230,23 @@ namespace gui
             pot1VoltageDisplay.Value = pot1DispVal;
             float pot2DispVal = (5 * (float)appBoard.ReadPotV(1)) / 255;
             pot2VoltageDisplay.Value = pot2DispVal;
+            pot2VoltageDisplay.RecommendedValue = pot2DispVal;
+        }
+        
+        private void lampIntensityScroll_Scroll(object sender, ScrollEventArgs e)
+        {
+            lampPercentDisplay.Text = (-lampIntensityScroll.Value).ToString() + "%";
         }
 
-        void lightsensor()
+        void lightSensor()
         {
             int lightDispVal = appBoard.ReadLight();
             lightDisplay.Value = lightDispVal;
         }
 
-        void lampscroll()
+        void lampScroll()
         {
-            byte[] value = BitConverter.GetBytes(lampIntensityScroll.Value);
+            byte[] value = BitConverter.GetBytes(-255*(lampIntensityScroll.Value)/100);
             appBoard.WriteLamp(value);
         }
 
@@ -225,8 +255,8 @@ namespace gui
             try
             {
                 potentiometres();
-                lampscroll();
-                lightsensor();
+                lampScroll();
+                lightSensor();
             }
             catch (Exception ex)
             {
@@ -235,52 +265,57 @@ namespace gui
             }
         }
 
-          /*      // TEMP TAB //
+                // TEMP TAB //
 
-        void pi_Logic(double desiredTemp, int kp, int ki)
+        double Clamp(double value, double min, double max)
         {
-            // Read the current temp
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
+        }
+
+        void piLogic(double desiredTemp, int kp, int ki)
+        {
             double currentTemp = appBoard.ReadTemp();
+            double error = desiredTemp - currentTemp;
 
-            // Calculate the error
-            double error = (currentTemp - desiredTemp);
-
-            // Proportional term (P)
-            double proportional = kp * error;
-
-            // Integral term (I), integrating the error over time
-            integral += error; 
-            double integralTerm = ki * integral;
-
-            // Total output (P + I)
-            double output = proportional + integralTerm;
-
-            if (error < 0) // Desired temperature is higher, use the heater
+            if (Math.Abs(error) > 0.1)
             {
-                // Map the output to the heater's PWM range 
-                byte[] heaterValue = { (byte)((byte)output & 0xFF), (byte)(((byte)output >> 8) & 0xFF) };
-                appBoard.WriteHeat(heaterValue); // Send PWM value to the heater
-            }
-            else if (error > 0) // Desired temperature is lower, use the fan
-            {
-                // Map the output to the fan's PWM range 
-                byte[] fanValue = { (byte)((byte)output & 0xFF), (byte)(((byte)output >> 8) & 0xFF) };
-                appBoard.WriteFan(fanValue); // Send PWM value to the fan
-            }
 
+                double proportional = kp * error;
+                integral += error;
+                double integralTerm = ki * integral;
+
+                double output = proportional + integralTerm;
+                output = Clamp(output, 0, 65535);
+
+                ushort pwmValue = (ushort)output;
+                byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
+
+                if (error > 0)
+                {
+                    appBoard.WriteHeat(pwmBytes);
+                }
+                else if (error < 0)
+                {
+                    appBoard.WriteFan(pwmBytes);
+                }
+            }
+            else
+            {
+                appBoard.WriteHeat(new byte[] { 0, 0 });
+                appBoard.WriteFan(new byte[] { 0, 0 });
+            }
         }
 
         void temp_tick(object sender, EventArgs e)
         {
-            double desiredTemp = (double)setDesiredTemp.Value;
-            int kp = (int)setKP.Value;
-            int ki = (int)setKI.Value;
-            
-
-            pi_Logic(desiredTemp, kp, ki);
-
+            double desiredTemp = (double)setpointTemp.Value;
+            int kp = (int)kpTuning.Value;
+            int ki = (int)kiTuning.Value;
+            piLogic(desiredTemp, kp, ki);
         }
-          */
+          
     }
 }
 

@@ -36,7 +36,6 @@ namespace gui
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.serialPortStatusLED = new Bulb.LedBulb();
             this.disconnectButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
             this.baudRateDropdown = new System.Windows.Forms.ComboBox();
@@ -62,6 +61,26 @@ namespace gui
             this.tickPC0 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.portsLightsPage = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lampPercentDisplay = new System.Windows.Forms.TextBox();
+            this.lampIntensityScroll = new System.Windows.Forms.VScrollBar();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tempControl = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.motorSpeedDisplay = new System.Windows.Forms.TextBox();
+            this.actualTempDisplay = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tempChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label16 = new System.Windows.Forms.Label();
+            this.serialPort = new System.IO.Ports.SerialPort(this.components);
+            this.appTimer = new System.Windows.Forms.Timer(this.components);
+            this.serialPortStatusLED = new Bulb.LedBulb();
             this.pa4LED = new Bulb.LedBulb();
             this.pa5LED = new Bulb.LedBulb();
             this.pa3LED = new Bulb.LedBulb();
@@ -72,31 +91,12 @@ namespace gui
             this.pa0LED = new Bulb.LedBulb();
             this.sevenSegment2 = new DmitryBrant.CustomControls.SevenSegment();
             this.sevenSegment1 = new DmitryBrant.CustomControls.SevenSegment();
-            this.portsLightsPage = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lampPercentDisplay = new System.Windows.Forms.TextBox();
-            this.lampIntensityScroll = new System.Windows.Forms.VScrollBar();
             this.lightDisplay = new AquaControls.AquaGauge();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pot2VoltageDisplay = new AquaControls.AquaGauge();
             this.pot1VoltageDisplay = new AquaControls.AquaGauge();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tempControl = new System.Windows.Forms.TabPage();
-            this.serialPort = new System.IO.Ports.SerialPort(this.components);
-            this.appTimer = new System.Windows.Forms.Timer(this.components);
-            this.setpointTemp = new System.Windows.Forms.DomainUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.tempChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.kpTuning = new System.Windows.Forms.DomainUpDown();
-            this.kiTuning = new System.Windows.Forms.DomainUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.actualTempDisplay = new System.Windows.Forms.TextBox();
-            this.motorSpeedDisplay = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
+            this.kiTuning = new System.Windows.Forms.NumericUpDown();
+            this.kpTuning = new System.Windows.Forms.NumericUpDown();
+            this.setpointTemp = new System.Windows.Forms.NumericUpDown();
             this.tabControl1.SuspendLayout();
             this.setupPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,6 +106,9 @@ namespace gui
             this.groupBox3.SuspendLayout();
             this.tempControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tempChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kiTuning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kpTuning)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.setpointTemp)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -167,15 +170,6 @@ namespace gui
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Serial Port Status";
-            // 
-            // serialPortStatusLED
-            // 
-            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
-            this.serialPortStatusLED.Name = "serialPortStatusLED";
-            this.serialPortStatusLED.On = true;
-            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
-            this.serialPortStatusLED.TabIndex = 6;
-            this.serialPortStatusLED.Text = "ledBulb1";
             // 
             // disconnectButton
             // 
@@ -450,6 +444,206 @@ namespace gui
             this.label4.TabIndex = 0;
             this.label4.Text = "PINA";
             // 
+            // portsLightsPage
+            // 
+            this.portsLightsPage.Controls.Add(this.groupBox4);
+            this.portsLightsPage.Controls.Add(this.groupBox3);
+            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
+            this.portsLightsPage.Name = "portsLightsPage";
+            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.portsLightsPage.Size = new System.Drawing.Size(428, 616);
+            this.portsLightsPage.TabIndex = 2;
+            this.portsLightsPage.Text = "Ports-Lights";
+            this.portsLightsPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lampPercentDisplay);
+            this.groupBox4.Controls.Add(this.lampIntensityScroll);
+            this.groupBox4.Controls.Add(this.lightDisplay);
+            this.groupBox4.Location = new System.Drawing.Point(6, 322);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(416, 288);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Light";
+            // 
+            // lampPercentDisplay
+            // 
+            this.lampPercentDisplay.Location = new System.Drawing.Point(139, 225);
+            this.lampPercentDisplay.Name = "lampPercentDisplay";
+            this.lampPercentDisplay.ReadOnly = true;
+            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
+            this.lampPercentDisplay.TabIndex = 6;
+            // 
+            // lampIntensityScroll
+            // 
+            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 55);
+            this.lampIntensityScroll.Maximum = 9;
+            this.lampIntensityScroll.Minimum = -100;
+            this.lampIntensityScroll.Name = "lampIntensityScroll";
+            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
+            this.lampIntensityScroll.TabIndex = 5;
+            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
+            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(416, 310);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ports";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(227, 31);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(147, 25);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Pot2 Voltage";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(36, 31);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(147, 25);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Pot1 Voltage";
+            // 
+            // tempControl
+            // 
+            this.tempControl.Controls.Add(this.setpointTemp);
+            this.tempControl.Controls.Add(this.kpTuning);
+            this.tempControl.Controls.Add(this.kiTuning);
+            this.tempControl.Controls.Add(this.label21);
+            this.tempControl.Controls.Add(this.label20);
+            this.tempControl.Controls.Add(this.motorSpeedDisplay);
+            this.tempControl.Controls.Add(this.actualTempDisplay);
+            this.tempControl.Controls.Add(this.label19);
+            this.tempControl.Controls.Add(this.label18);
+            this.tempControl.Controls.Add(this.label17);
+            this.tempControl.Controls.Add(this.tempChart);
+            this.tempControl.Controls.Add(this.label16);
+            this.tempControl.Location = new System.Drawing.Point(4, 22);
+            this.tempControl.Name = "tempControl";
+            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tempControl.Size = new System.Drawing.Size(428, 616);
+            this.tempControl.TabIndex = 3;
+            this.tempControl.Text = "Temp Control";
+            this.tempControl.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(23, 281);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(85, 13);
+            this.label21.TabIndex = 11;
+            this.label21.Text = "Motor Speed [%]";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(25, 228);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(83, 13);
+            this.label20.TabIndex = 10;
+            this.label20.Text = "Actual Temp [C]";
+            // 
+            // motorSpeedDisplay
+            // 
+            this.motorSpeedDisplay.Enabled = false;
+            this.motorSpeedDisplay.Location = new System.Drawing.Point(15, 297);
+            this.motorSpeedDisplay.Name = "motorSpeedDisplay";
+            this.motorSpeedDisplay.ReadOnly = true;
+            this.motorSpeedDisplay.Size = new System.Drawing.Size(100, 20);
+            this.motorSpeedDisplay.TabIndex = 9;
+            this.motorSpeedDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // actualTempDisplay
+            // 
+            this.actualTempDisplay.Enabled = false;
+            this.actualTempDisplay.Location = new System.Drawing.Point(15, 244);
+            this.actualTempDisplay.Name = "actualTempDisplay";
+            this.actualTempDisplay.ReadOnly = true;
+            this.actualTempDisplay.Size = new System.Drawing.Size(100, 20);
+            this.actualTempDisplay.TabIndex = 8;
+            this.actualTempDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(18, 151);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(16, 13);
+            this.label19.TabIndex = 7;
+            this.label19.Text = "Ki";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(16, 118);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(20, 13);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Kp";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(34, 87);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 13);
+            this.label17.TabIndex = 5;
+            this.label17.Text = "PI Tuning";
+            // 
+            // tempChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea1);
+            this.tempChart.Location = new System.Drawing.Point(131, 47);
+            this.tempChart.Name = "tempChart";
+            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series1.IsXValueIndexed = true;
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series1);
+            this.tempChart.Size = new System.Drawing.Size(292, 300);
+            this.tempChart.TabIndex = 2;
+            this.tempChart.Text = "chart1";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(12, 21);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(109, 13);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "Setpoint Temp [C]";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // serialPortStatusLED
+            // 
+            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
+            this.serialPortStatusLED.Name = "serialPortStatusLED";
+            this.serialPortStatusLED.On = true;
+            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
+            this.serialPortStatusLED.TabIndex = 6;
+            this.serialPortStatusLED.Text = "ledBulb1";
+            // 
             // pa4LED
             // 
             this.pa4LED.Color = System.Drawing.Color.Red;
@@ -560,45 +754,6 @@ namespace gui
             this.sevenSegment1.TabStop = false;
             this.sevenSegment1.Value = null;
             // 
-            // portsLightsPage
-            // 
-            this.portsLightsPage.Controls.Add(this.groupBox4);
-            this.portsLightsPage.Controls.Add(this.groupBox3);
-            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
-            this.portsLightsPage.Name = "portsLightsPage";
-            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.portsLightsPage.Size = new System.Drawing.Size(428, 616);
-            this.portsLightsPage.TabIndex = 2;
-            this.portsLightsPage.Text = "Ports-Lights";
-            this.portsLightsPage.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.lampPercentDisplay);
-            this.groupBox4.Controls.Add(this.lampIntensityScroll);
-            this.groupBox4.Controls.Add(this.lightDisplay);
-            this.groupBox4.Location = new System.Drawing.Point(6, 322);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(416, 288);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Light";
-            // 
-            // lampPercentDisplay
-            // 
-            this.lampPercentDisplay.Location = new System.Drawing.Point(139, 225);
-            this.lampPercentDisplay.Name = "lampPercentDisplay";
-            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
-            this.lampPercentDisplay.TabIndex = 6;
-            // 
-            // lampIntensityScroll
-            // 
-            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 55);
-            this.lampIntensityScroll.Name = "lampIntensityScroll";
-            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
-            this.lampIntensityScroll.TabIndex = 5;
-            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
-            // 
             // lightDisplay
             // 
             this.lightDisplay.BackColor = System.Drawing.Color.Transparent;
@@ -614,19 +769,6 @@ namespace gui
             this.lightDisplay.TabIndex = 4;
             this.lightDisplay.ThresholdPercent = 0F;
             this.lightDisplay.Value = 0F;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
-            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(416, 310);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Ports";
             // 
             // pot2VoltageDisplay
             // 
@@ -660,159 +802,29 @@ namespace gui
             this.pot1VoltageDisplay.ThresholdPercent = 0F;
             this.pot1VoltageDisplay.Value = 0F;
             // 
-            // label15
+            // kiTuning
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(227, 31);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(147, 25);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Pot2 Voltage";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(36, 31);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(147, 25);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Pot1 Voltage";
-            // 
-            // tempControl
-            // 
-            this.tempControl.Controls.Add(this.label21);
-            this.tempControl.Controls.Add(this.label20);
-            this.tempControl.Controls.Add(this.motorSpeedDisplay);
-            this.tempControl.Controls.Add(this.actualTempDisplay);
-            this.tempControl.Controls.Add(this.label19);
-            this.tempControl.Controls.Add(this.label18);
-            this.tempControl.Controls.Add(this.label17);
-            this.tempControl.Controls.Add(this.kiTuning);
-            this.tempControl.Controls.Add(this.kpTuning);
-            this.tempControl.Controls.Add(this.tempChart);
-            this.tempControl.Controls.Add(this.label16);
-            this.tempControl.Controls.Add(this.setpointTemp);
-            this.tempControl.Location = new System.Drawing.Point(4, 22);
-            this.tempControl.Name = "tempControl";
-            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tempControl.Size = new System.Drawing.Size(428, 616);
-            this.tempControl.TabIndex = 3;
-            this.tempControl.Text = "Temp Control";
-            this.tempControl.UseVisualStyleBackColor = true;
-            // 
-            // setpointTemp
-            // 
-            this.setpointTemp.Location = new System.Drawing.Point(21, 47);
-            this.setpointTemp.Name = "setpointTemp";
-            this.setpointTemp.Size = new System.Drawing.Size(90, 20);
-            this.setpointTemp.TabIndex = 0;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(12, 21);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(109, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "Setpoint Temp [C]";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tempChart
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea1);
-            this.tempChart.Location = new System.Drawing.Point(131, 47);
-            this.tempChart.Name = "tempChart";
-            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.IsXValueIndexed = true;
-            series1.Name = "Series1";
-            this.tempChart.Series.Add(series1);
-            this.tempChart.Size = new System.Drawing.Size(292, 300);
-            this.tempChart.TabIndex = 2;
-            this.tempChart.Text = "chart1";
+            this.kiTuning.Location = new System.Drawing.Point(42, 147);
+            this.kiTuning.Name = "kiTuning";
+            this.kiTuning.Size = new System.Drawing.Size(73, 20);
+            this.kiTuning.TabIndex = 12;
+            this.kiTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // kpTuning
             // 
-            this.kpTuning.Location = new System.Drawing.Point(49, 114);
+            this.kpTuning.Location = new System.Drawing.Point(42, 114);
             this.kpTuning.Name = "kpTuning";
-            this.kpTuning.Size = new System.Drawing.Size(61, 20);
-            this.kpTuning.TabIndex = 3;
+            this.kpTuning.Size = new System.Drawing.Size(73, 20);
+            this.kpTuning.TabIndex = 13;
+            this.kpTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // kiTuning
+            // setpointTemp
             // 
-            this.kiTuning.Location = new System.Drawing.Point(49, 145);
-            this.kiTuning.Name = "kiTuning";
-            this.kiTuning.Size = new System.Drawing.Size(61, 20);
-            this.kiTuning.TabIndex = 4;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(34, 87);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 13);
-            this.label17.TabIndex = 5;
-            this.label17.Text = "PI Tuning";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(16, 118);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(20, 13);
-            this.label18.TabIndex = 6;
-            this.label18.Text = "Kp";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(18, 149);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(16, 13);
-            this.label19.TabIndex = 7;
-            this.label19.Text = "Ki";
-            // 
-            // actualTempDisplay
-            // 
-            this.actualTempDisplay.Enabled = false;
-            this.actualTempDisplay.Location = new System.Drawing.Point(15, 244);
-            this.actualTempDisplay.Name = "actualTempDisplay";
-            this.actualTempDisplay.Size = new System.Drawing.Size(100, 20);
-            this.actualTempDisplay.TabIndex = 8;
-            this.actualTempDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // motorSpeedDisplay
-            // 
-            this.motorSpeedDisplay.Enabled = false;
-            this.motorSpeedDisplay.Location = new System.Drawing.Point(15, 297);
-            this.motorSpeedDisplay.Name = "motorSpeedDisplay";
-            this.motorSpeedDisplay.Size = new System.Drawing.Size(100, 20);
-            this.motorSpeedDisplay.TabIndex = 9;
-            this.motorSpeedDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(25, 228);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(83, 13);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "Actual Temp [C]";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(23, 281);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(85, 13);
-            this.label21.TabIndex = 11;
-            this.label21.Text = "Motor Speed [%]";
+            this.setpointTemp.Location = new System.Drawing.Point(15, 47);
+            this.setpointTemp.Name = "setpointTemp";
+            this.setpointTemp.Size = new System.Drawing.Size(100, 20);
+            this.setpointTemp.TabIndex = 14;
+            this.setpointTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Form1
             // 
@@ -836,6 +848,9 @@ namespace gui
             this.tempControl.ResumeLayout(false);
             this.tempControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tempChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kiTuning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kpTuning)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.setpointTemp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -897,9 +912,6 @@ namespace gui
         private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.Timer appTimer;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.DomainUpDown setpointTemp;
-        private System.Windows.Forms.DomainUpDown kiTuning;
-        private System.Windows.Forms.DomainUpDown kpTuning;
         private System.Windows.Forms.DataVisualization.Charting.Chart tempChart;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
@@ -908,5 +920,8 @@ namespace gui
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown setpointTemp;
+        private System.Windows.Forms.NumericUpDown kpTuning;
+        private System.Windows.Forms.NumericUpDown kiTuning;
     }
 }

@@ -260,5 +260,6 @@ int main(void)
 	setup();
     while (1) 
     {
+		PORTC = 0xff;
     }
 }

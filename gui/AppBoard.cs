@@ -28,47 +28,45 @@ namespace gui
             return SerialPort.GetPortNames();
         }
 
-        public void Connect(string portName, int baudRate)
+        public void Connect(string portName, int baudRate, Action onConnected)
         {
-             /*
-        public void Connect(string portName, int baudRate)
-        {
-            try
-            {
-                serialPort.PortName = portName;
-                serialPort.BaudRate = baudRate;
-                serialPort.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error connecting to port: {ex.Message}");
-            }
-        }*/
-            // Create a background thread to open the serial port
+            // Create a background thread to open the serial port to stop jumping to next task before connection is made
             ThreadPool.QueueUserWorkItem(state =>
             {
                 try
                 {
-                        serialPort.PortName = portName;
-                        serialPort.BaudRate = baudRate;
-                        serialPort.Open();  // Try to open the port
+                    serialPort.PortName = portName;
+                    serialPort.BaudRate = baudRate;
+                    serialPort.Open();  // Try to open the port
+                    int timeoutMs = 3000; // Wait up to 3 seconds
+                    int intervalMs = 100;
+                    int waited = 0;
+
+                    while (!serialPort.IsOpen && waited < timeoutMs)
+                    {
+                        Thread.Sleep(intervalMs);
+                        waited += intervalMs;
+                    }
+
+                    if (serialPort.IsOpen)
+                    {
+                        onConnected?.Invoke();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Failed to open {portName} within timeout.", "Connection Timeout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 catch (UnauthorizedAccessException ex)
                 {
-                    // Handle access-related issues (e.g., port is already in use)
-                    MessageBox.Show($"Error opening {comPort}: {ex.Message}", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error opening {portName}: {ex.Message}", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
                 catch (Exception ex)
                 {
-                    // Catch any other exceptions
-                    MessageBox.Show($"Error opening {comPort}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error opening {portName}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            );
+            });
         }
-
-       
         
         public void Disconnect()
         {
@@ -78,15 +76,11 @@ namespace gui
             }
         }
 
-        public void checkTx()
+        public int checkTx()
         {
             byte[] checkConnect = { startByte, 0x00, stopByte };
             serialPort.Write(checkConnect, 0, checkConnect.Length);
-            int response = serialPort.ReadByte();
-            if (response != 0x0F)
-            {
-                MessageBox.Show($"Error connecting to MCU");
-            }
+            return serialPort.ReadByte();
         }
 
         public byte ReadPINA()

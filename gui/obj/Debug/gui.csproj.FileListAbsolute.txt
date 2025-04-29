@@ -20,3 +20,14 @@ C:\Users\qtr1230\Downloads\EmbeddedSystemsDesignENEL712-main\EmbeddedSystemsDesi
 C:\Users\qtr1230\Downloads\EmbeddedSystemsDesignENEL712-main\EmbeddedSystemsDesignENEL712-main\gui\obj\Debug\gui.csproj.CoreCompileInputs.cache
 C:\Users\qtr1230\Downloads\EmbeddedSystemsDesignENEL712-main\EmbeddedSystemsDesignENEL712-main\gui\obj\Debug\gui.exe
 C:\Users\qtr1230\Downloads\EmbeddedSystemsDesignENEL712-main\EmbeddedSystemsDesignENEL712-main\gui\obj\Debug\gui.pdb
+C:\Users\qtr1230\Documents\gui\bin\Debug\gui.exe.config
+C:\Users\qtr1230\Documents\gui\bin\Debug\gui.exe
+C:\Users\qtr1230\Documents\gui\bin\Debug\gui.pdb
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.csproj.AssemblyReference.cache
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.AquaGauge.resources
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.Form1.resources
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.Properties.Resources.resources
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.csproj.GenerateResource.cache
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.csproj.CoreCompileInputs.cache
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.exe
+C:\Users\qtr1230\Documents\gui\obj\Debug\gui.pdb

@@ -135,6 +135,14 @@ namespace gui
             int response = serialPort.ReadByte();
         }
 
+        public void tempTabClosed()
+        {
+            //turn off temp/fan stuff
+            byte[] pwmBytesOff = { (byte)(0 & 0xFF), (byte)((0 >> 8) & 0xFF) };
+            WriteHeat(pwmBytesOff);
+            WriteFan(pwmBytesOff);
+        }
+
         public double ReadTemp()
         {
             byte[] readTemp = { startByte, 0x04, stopByte };

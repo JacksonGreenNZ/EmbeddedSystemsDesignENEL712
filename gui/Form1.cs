@@ -14,6 +14,7 @@ using System.IO.Ports;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.CodeDom;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace gui
 {
@@ -70,14 +71,17 @@ namespace gui
             {
                 case 0: // Setup Tab
                     appTimer.Stop();
+                    appBoard.tempTabClosed();
                     break;
 
                 case 1: // Digital I/O Tab
                     UpdateTimerEvent(digIO_Tick);
+                    appBoard.tempTabClosed();
                     break;
 
                 case 2: // Pot Tab
                     UpdateTimerEvent(pot_tick);
+                    appBoard.tempTabClosed();
                     break;
 
                 case 3: // Temp Tab
@@ -283,7 +287,35 @@ namespace gui
         {
             double currentTemp = appBoard.ReadTemp();
 
+            //need to convert from bytes to actual degrees
+            currentTemp = (currentTemp / 255)*5;
+            currentTemp = currentTemp / 0.05;
+
+            actualTempDisplay.Text = $"{currentTemp:F2} [C]";       
+
             tempChart.Series[0].Points.AddXY(x++, currentTemp);
+
+            var yStripLine = new StripLine();//line to show desired temp
+            yStripLine.Interval = 0;
+            yStripLine.StripWidth = 0;
+            yStripLine.BackColor = Color.Red; 
+            yStripLine.BorderWidth = 1;
+            yStripLine.BorderColor = Color.Red;
+            yStripLine.BorderDashStyle = ChartDashStyle.Dash;
+            yStripLine.IntervalOffset = desiredTemp; 
+
+            // Clear previous striplines if updating
+            tempChart.ChartAreas[0].AxisY.StripLines.Clear();
+            tempChart.ChartAreas[0].AxisY.StripLines.Add(yStripLine);
+
+            // Find the max value between series and desiredTemp
+            double maxSeriesValue = tempChart.Series[0].Points.Count > 0
+                ? tempChart.Series[0].Points.Max(p => p.YValues[0])
+                : 0;
+
+            double yMax = Math.Max(maxSeriesValue, desiredTemp) + 5;
+            tempChart.ChartAreas[0].AxisY.Maximum = yMax;
+
             double error = desiredTemp - currentTemp;
 
             if (Math.Abs(error) > 0.01)
@@ -300,13 +332,27 @@ namespace gui
                 ushort pwmValue = (ushort)output;
                 byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
 
+                ushort pwmValueOff = 0;
+                byte[] pwmBytesOff = { (byte)(pwmValueOff & 0xFF), (byte)((pwmValueOff >> 8) & 0xFF) };
+
                 if (error > 0)
                 {
                     appBoard.WriteHeat(pwmBytes);
+                    appBoard.WriteFan(pwmBytesOff);
+                    motorSpeedDisplay.Text = "0%";
                 }
                 else if (error < 0)
                 {
+                    double displayValue = (output / 399) * 100;
                     appBoard.WriteFan(pwmBytes);
+                    appBoard.WriteHeat(pwmBytesOff);
+                    motorSpeedDisplay.Text = $"{displayValue:F2}%";
+                }
+                else
+                {
+                    appBoard.WriteHeat(pwmBytesOff);
+                    appBoard.WriteFan(pwmBytesOff);
+                    motorSpeedDisplay.Text = "0%";
                 }
             }
             else

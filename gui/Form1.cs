@@ -38,6 +38,7 @@ namespace gui
             {
                 string[] comPorts = appBoard.getCOMs(); // Get the list of COM ports
                 serialPortStatusLED.On = false;// connection light off
+                datBasStatLED.On = false;//6 weeks later my naming conventions are less verbose
                 
                 comPortDropdown.Items.Clear(); // clear any existing items in the ComboBox
 
@@ -283,7 +284,7 @@ namespace gui
             return value;
         }
 
-        void piLogic(double desiredTemp, int kp, int ki)
+        void piLogic(double desiredTemp, int kp, int ki)//NEED TO CHANGE THIS - HEAT SHOULD ALWAYS BE 100%, ONLY FAN ON PI
         {
             double currentTemp = appBoard.ReadTemp();
 
@@ -296,7 +297,7 @@ namespace gui
             tempChart.Series[0].Points.AddXY(x++, currentTemp);
 
             var yStripLine = new StripLine();//line to show desired temp
-            yStripLine.Interval = 0;
+            yStripLine.Interval = 0;        
             yStripLine.StripWidth = 0;
             yStripLine.BackColor = Color.Red; 
             yStripLine.BorderWidth = 1;

@@ -29,8 +29,8 @@ namespace gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.setupPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -104,8 +104,22 @@ namespace gui
             this.lightDisplay = new AquaControls.AquaGauge();
             this.pot2VoltageDisplay = new AquaControls.AquaGauge();
             this.pot1VoltageDisplay = new AquaControls.AquaGauge();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.datBasStatLED = new Bulb.LedBulb();
+            this.datBCon = new System.Windows.Forms.Button();
+            this.datBDis = new System.Windows.Forms.Button();
+            this.datBasBox = new System.Windows.Forms.TextBox();
+            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.usernameBox = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.setupPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.digIOPage.SuspendLayout();
             this.portsLightsPage.SuspendLayout();
@@ -148,6 +162,18 @@ namespace gui
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label27);
+            this.groupBox2.Controls.Add(this.label26);
+            this.groupBox2.Controls.Add(this.label25);
+            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.usernameBox);
+            this.groupBox2.Controls.Add(this.passwordBox);
+            this.groupBox2.Controls.Add(this.datBasBox);
+            this.groupBox2.Controls.Add(this.datBDis);
+            this.groupBox2.Controls.Add(this.datBCon);
+            this.groupBox2.Controls.Add(this.datBasStatLED);
+            this.groupBox2.Controls.Add(this.label23);
             this.groupBox2.Location = new System.Drawing.Point(6, 210);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(416, 298);
@@ -660,17 +686,17 @@ namespace gui
             // 
             // tempChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea2);
             this.tempChart.Location = new System.Drawing.Point(131, 47);
             this.tempChart.Name = "tempChart";
             this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.IsXValueIndexed = true;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 4;
-            this.tempChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.IsXValueIndexed = true;
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series2);
             this.tempChart.Size = new System.Drawing.Size(292, 300);
             this.tempChart.TabIndex = 2;
             this.tempChart.Text = "chart1";
@@ -699,6 +725,7 @@ namespace gui
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.textBox1);
             this.groupBox6.Controls.Add(this.insDat);
             this.groupBox6.Location = new System.Drawing.Point(6, 26);
             this.groupBox6.Name = "groupBox6";
@@ -923,6 +950,118 @@ namespace gui
             this.pot1VoltageDisplay.ThresholdPercent = 0F;
             this.pot1VoltageDisplay.Value = 0F;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 55);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(181, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(27, 265);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(177, 13);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "Database Server Connection Status";
+            // 
+            // datBasStatLED
+            // 
+            this.datBasStatLED.Location = new System.Drawing.Point(281, 260);
+            this.datBasStatLED.Name = "datBasStatLED";
+            this.datBasStatLED.On = true;
+            this.datBasStatLED.Size = new System.Drawing.Size(75, 23);
+            this.datBasStatLED.TabIndex = 1;
+            this.datBasStatLED.Text = "ledBulb1";
+            // 
+            // datBCon
+            // 
+            this.datBCon.Location = new System.Drawing.Point(50, 224);
+            this.datBCon.Name = "datBCon";
+            this.datBCon.Size = new System.Drawing.Size(130, 23);
+            this.datBCon.TabIndex = 2;
+            this.datBCon.Text = "Database - Connect";
+            this.datBCon.UseVisualStyleBackColor = true;
+            // 
+            // datBDis
+            // 
+            this.datBDis.Location = new System.Drawing.Point(228, 224);
+            this.datBDis.Name = "datBDis";
+            this.datBDis.Size = new System.Drawing.Size(128, 23);
+            this.datBDis.TabIndex = 3;
+            this.datBDis.Text = "Database - Disconnect";
+            this.datBDis.UseVisualStyleBackColor = true;
+            // 
+            // datBasBox
+            // 
+            this.datBasBox.Location = new System.Drawing.Point(180, 178);
+            this.datBasBox.Name = "datBasBox";
+            this.datBasBox.Size = new System.Drawing.Size(176, 20);
+            this.datBasBox.TabIndex = 4;
+            // 
+            // passwordBox
+            // 
+            this.passwordBox.Location = new System.Drawing.Point(180, 136);
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.Size = new System.Drawing.Size(176, 20);
+            this.passwordBox.TabIndex = 5;
+            // 
+            // usernameBox
+            // 
+            this.usernameBox.Location = new System.Drawing.Point(180, 94);
+            this.usernameBox.Name = "usernameBox";
+            this.usernameBox.Size = new System.Drawing.Size(176, 20);
+            this.usernameBox.TabIndex = 6;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(180, 51);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(176, 21);
+            this.comboBox1.TabIndex = 7;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label24.Location = new System.Drawing.Point(34, 182);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(61, 13);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "Database";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label25.Location = new System.Drawing.Point(34, 140);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(61, 13);
+            this.label25.TabIndex = 9;
+            this.label25.Text = "Password";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label26.Location = new System.Drawing.Point(34, 98);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(63, 13);
+            this.label26.TabIndex = 10;
+            this.label26.Text = "Username";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label27.Location = new System.Drawing.Point(34, 55);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(80, 13);
+            this.label27.TabIndex = 11;
+            this.label27.Text = "Server Name";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -933,6 +1072,8 @@ namespace gui
             this.Text = "AUT Application Board Control";
             this.tabControl1.ResumeLayout(false);
             this.setupPage.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.digIOPage.ResumeLayout(false);
@@ -950,6 +1091,7 @@ namespace gui
             ((System.ComponentModel.ISupportInitialize)(this.tempChart)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
@@ -1031,5 +1173,18 @@ namespace gui
         private System.Windows.Forms.Button disDatLog;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button insDat;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button datBCon;
+        private Bulb.LedBulb datBasStatLED;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox usernameBox;
+        private System.Windows.Forms.TextBox passwordBox;
+        private System.Windows.Forms.TextBox datBasBox;
+        private System.Windows.Forms.Button datBDis;
     }
 }

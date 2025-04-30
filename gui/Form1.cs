@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.CodeDom;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml;
 
 namespace gui
 {
@@ -22,7 +23,7 @@ namespace gui
     {
         private AppBoard appBoard;
         private EventHandler ev;
-        private double integral;
+        private double integral = 0;
         private int x;
         public Form1()
         {
@@ -86,8 +87,11 @@ namespace gui
                     break;
 
                 case 3: // Temp Tab
+                    setpointTemp.Value = 45;
                     x = 0;
                     integral = 0;
+                    byte[] pwmBytesFull = { (byte)(0xFF & 0xFF), (byte)((0xFF >> 8) & 0xFF) };
+                    appBoard.WriteHeat(pwmBytesFull);
                     UpdateTimerEvent(temp_tick);
                     break;
             }
@@ -284,7 +288,7 @@ namespace gui
             return value;
         }
 
-        void piLogic(double desiredTemp, int kp, int ki)//NEED TO CHANGE THIS - HEAT SHOULD ALWAYS BE 100%, ONLY FAN ON PI
+        void piLogicboth(double desiredTemp, int kp, int ki)
         {
             double currentTemp = appBoard.ReadTemp();
 
@@ -317,49 +321,99 @@ namespace gui
             double yMax = Math.Max(maxSeriesValue, desiredTemp) + 5;
             tempChart.ChartAreas[0].AxisY.Maximum = yMax;
 
-            double error = desiredTemp - currentTemp;
+            double error = desiredTemp - currentTemp;        
+            integral += error*0.1;
 
-            if (Math.Abs(error) > 0.01)
+            double output = (kp * error) + (ki * integral);
+            output = Clamp(output, 0, 100);
+            output = output * 399 / 100;
+
+            ushort pwmValue = (ushort)output;
+            byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
+
+            byte[] pwmBytesOff = { (byte)(0 & 0xFF), (byte)((0 >> 8) & 0xFF) };
+
+            if (error > 0)
             {
-                double proportional = kp * error;
-                integral += error;
-                integral = Clamp(integral, -1000, 1000);  // Limiting the integral windup
-                double integralTerm = ki * integral;
-                double output = proportional + integralTerm;
-
-                output = Math.Abs(output);
-                output = Clamp(output, 0, 399);
-
-                ushort pwmValue = (ushort)output;
-                byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
-
-                ushort pwmValueOff = 0;
-                byte[] pwmBytesOff = { (byte)(pwmValueOff & 0xFF), (byte)((pwmValueOff >> 8) & 0xFF) };
-
-                if (error > 0)
-                {
-                    appBoard.WriteHeat(pwmBytes);
-                    appBoard.WriteFan(pwmBytesOff);
-                    motorSpeedDisplay.Text = "0%";
-                }
-                else if (error < 0)
-                {
-                    double displayValue = (output / 399) * 100;
-                    appBoard.WriteFan(pwmBytes);
-                    appBoard.WriteHeat(pwmBytesOff);
-                    motorSpeedDisplay.Text = $"{displayValue:F2}%";
-                }
-                else
-                {
-                    appBoard.WriteHeat(pwmBytesOff);
-                    appBoard.WriteFan(pwmBytesOff);
-                    motorSpeedDisplay.Text = "0%";
-                }
+                appBoard.WriteHeat(pwmBytes);
+                appBoard.WriteFan(pwmBytesOff);
+                motorSpeedDisplay.Text = "0%";
+            }
+            else if (error < 0)
+            {
+                double displayValue = (output / 399) * 100;
+                appBoard.WriteFan(pwmBytes);
+                appBoard.WriteHeat(pwmBytesOff);
+                motorSpeedDisplay.Text = $"{displayValue:F2}%";
             }
             else
             {
-                appBoard.WriteHeat(new byte[] { 0, 0 });
-                appBoard.WriteFan(new byte[] { 0, 0 });
+                appBoard.WriteHeat(pwmBytesOff);
+                appBoard.WriteFan(pwmBytesOff);
+                motorSpeedDisplay.Text = "0%";
+            }
+         
+        }
+
+
+        void piLogic(double desiredTemp, int kp, int ki)
+        {
+            double currentTemp = appBoard.ReadTemp();
+
+            //need to convert from volt to actual degrees
+            currentTemp = (currentTemp / 255) * 5;
+            currentTemp = currentTemp / 0.05;
+
+            actualTempDisplay.Text = $"{currentTemp:F2} [C]";
+
+            tempChart.Series[0].Points.AddXY(x++, currentTemp);
+
+            var yStripLine = new StripLine();//line to show desired temp
+            yStripLine.Interval = 0;
+            yStripLine.StripWidth = 0;
+            yStripLine.BackColor = Color.Red;
+            yStripLine.BorderWidth = 1;
+            yStripLine.BorderColor = Color.Red;
+            yStripLine.BorderDashStyle = ChartDashStyle.Dash;
+            yStripLine.IntervalOffset = desiredTemp;
+
+            // Clear previous striplines if updating
+            tempChart.ChartAreas[0].AxisY.StripLines.Clear();
+            tempChart.ChartAreas[0].AxisY.StripLines.Add(yStripLine);
+
+            // Find the max value between series and desiredTemp
+            double maxSeriesValue = tempChart.Series[0].Points.Count > 0
+                ? tempChart.Series[0].Points.Max(p => p.YValues[0])
+                : 0;
+
+            double yMax = Math.Max(maxSeriesValue, desiredTemp) + 5;
+            tempChart.ChartAreas[0].AxisY.Maximum = yMax;
+
+            double error = desiredTemp - currentTemp;
+            integral += error * 0.1;
+            integral = Clamp(integral, -1000, 1000);
+            double output = (kp * error) + (ki * integral);
+
+            output = Clamp(output, 0, 100);
+            output = (output * 399) / 100;
+
+            //ushort pwmValue = (ushort)output;
+            //byte[] pwmBytes = { (byte)(pwmValue & 0xFF), (byte)((pwmValue >> 8) & 0xFF) };
+            byte lsb = (byte)(output % 255);
+            byte msb = (byte)(output / 255);
+            byte[] pwmBytes = { lsb, msb };
+            byte[] pwmBytesOff = { (byte)(0 & 0xFF), (byte)((0 >> 8) & 0xFF) };
+
+            if (currentTemp > desiredTemp)
+            {
+                double displayValue = (output / 399) * 100;
+                appBoard.WriteFan(pwmBytes);
+                motorSpeedDisplay.Text = $"{displayValue:F2}%";
+            }
+            else
+            {
+                appBoard.WriteFan(pwmBytesOff);
+                motorSpeedDisplay.Text = "0%";
             }
         }
 

@@ -29,8 +29,8 @@ namespace gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.setupPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -936,7 +936,7 @@ namespace gui
             this.setpointTemp.TabIndex = 14;
             this.setpointTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.setpointTemp.Value = new decimal(new int[] {
-            25,
+            35,
             0,
             0,
             0});
@@ -1036,18 +1036,18 @@ namespace gui
             // 
             // tempChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea3);
             this.tempChart.Location = new System.Drawing.Point(131, 47);
             this.tempChart.Name = "tempChart";
             this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.BorderWidth = 5;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.IsXValueIndexed = true;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 4;
-            this.tempChart.Series.Add(series1);
+            series3.BorderWidth = 5;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series3.IsXValueIndexed = true;
+            series3.Name = "Series1";
+            series3.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series3);
             this.tempChart.Size = new System.Drawing.Size(292, 300);
             this.tempChart.TabIndex = 2;
             this.tempChart.Text = "chart1";

@@ -139,7 +139,7 @@ namespace gui
         {
             //turn off temp/fan stuff
             byte[] pwmBytesOff = { (byte)(0 & 0xFF), (byte)((0 >> 8) & 0xFF) };
-            WriteHeat(pwmBytesOff);
+            WriteHeat("off");
             WriteFan(pwmBytesOff);
         }
 
@@ -162,10 +162,15 @@ namespace gui
             }
         }
 
-        public void WriteHeat(byte[] value)
+        public void WriteHeat(string value)
         {
-            byte lsb = value[0];
-            byte msb = value[1];
+            byte lsb = 0;
+            byte msb = 0;
+            if (value == "on")
+            {
+                lsb = 255;
+                msb = 255;
+            }
             byte[] Writeheat = { startByte, 0x0B, lsb, msb, stopByte };
             serialPort.Write(Writeheat, 0, Writeheat.Length);
             int response = serialPort.ReadByte();

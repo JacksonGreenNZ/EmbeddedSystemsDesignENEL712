@@ -29,26 +29,13 @@ namespace gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.setupPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.usernameBox = new System.Windows.Forms.TextBox();
-            this.passwordBox = new System.Windows.Forms.TextBox();
-            this.datBasBox = new System.Windows.Forms.TextBox();
-            this.datBDis = new System.Windows.Forms.Button();
-            this.datBCon = new System.Windows.Forms.Button();
-            this.datBasStatLED = new Bulb.LedBulb();
-            this.label23 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.serialPortStatusLED = new Bulb.LedBulb();
             this.disconnectButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
             this.baudRateDropdown = new System.Windows.Forms.ComboBox();
@@ -74,35 +61,14 @@ namespace gui
             this.tickPC0 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.pa4LED = new Bulb.LedBulb();
-            this.pa5LED = new Bulb.LedBulb();
-            this.pa3LED = new Bulb.LedBulb();
-            this.pa6LED = new Bulb.LedBulb();
-            this.pa7LED = new Bulb.LedBulb();
-            this.pa2LED = new Bulb.LedBulb();
-            this.pa1LED = new Bulb.LedBulb();
-            this.pa0LED = new Bulb.LedBulb();
-            this.sevenSegment2 = new DmitryBrant.CustomControls.SevenSegment();
-            this.sevenSegment1 = new DmitryBrant.CustomControls.SevenSegment();
             this.portsLightsPage = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lampPercentDisplay = new System.Windows.Forms.TextBox();
             this.lampIntensityScroll = new System.Windows.Forms.VScrollBar();
-            this.lightDisplay = new AquaControls.AquaGauge();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pot2VoltageDisplay = new AquaControls.AquaGauge();
-            this.pot1VoltageDisplay = new AquaControls.AquaGauge();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tempControl = new System.Windows.Forms.TabPage();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.disDatLog = new System.Windows.Forms.Button();
-            this.label22 = new System.Windows.Forms.Label();
-            this.enbDatLog = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.insDat = new System.Windows.Forms.Button();
             this.setpointTemp = new System.Windows.Forms.NumericUpDown();
             this.kpTuning = new System.Windows.Forms.NumericUpDown();
             this.kiTuning = new System.Windows.Forms.NumericUpDown();
@@ -117,6 +83,40 @@ namespace gui
             this.label16 = new System.Windows.Forms.Label();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.appTimer = new System.Windows.Forms.Timer(this.components);
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.enbDatLog = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
+            this.disDatLog = new System.Windows.Forms.Button();
+            this.insDat = new System.Windows.Forms.Button();
+            this.serialPortStatusLED = new Bulb.LedBulb();
+            this.pa4LED = new Bulb.LedBulb();
+            this.pa5LED = new Bulb.LedBulb();
+            this.pa3LED = new Bulb.LedBulb();
+            this.pa6LED = new Bulb.LedBulb();
+            this.pa7LED = new Bulb.LedBulb();
+            this.pa2LED = new Bulb.LedBulb();
+            this.pa1LED = new Bulb.LedBulb();
+            this.pa0LED = new Bulb.LedBulb();
+            this.sevenSegment2 = new DmitryBrant.CustomControls.SevenSegment();
+            this.sevenSegment1 = new DmitryBrant.CustomControls.SevenSegment();
+            this.lightDisplay = new AquaControls.AquaGauge();
+            this.pot2VoltageDisplay = new AquaControls.AquaGauge();
+            this.pot1VoltageDisplay = new AquaControls.AquaGauge();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.datBasStatLED = new Bulb.LedBulb();
+            this.datBCon = new System.Windows.Forms.Button();
+            this.datBDis = new System.Windows.Forms.Button();
+            this.datBasBox = new System.Windows.Forms.TextBox();
+            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.usernameBox = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.setupPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -126,13 +126,13 @@ namespace gui
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tempControl.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setpointTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kpTuning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kiTuning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tempChart)).BeginInit();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -181,111 +181,6 @@ namespace gui
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Database Server Connection";
             // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label27.Location = new System.Drawing.Point(34, 55);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(80, 13);
-            this.label27.TabIndex = 11;
-            this.label27.Text = "Server Name";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label26.Location = new System.Drawing.Point(34, 98);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(63, 13);
-            this.label26.TabIndex = 10;
-            this.label26.Text = "Username";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label25.Location = new System.Drawing.Point(34, 140);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(61, 13);
-            this.label25.TabIndex = 9;
-            this.label25.Text = "Password";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label24.Location = new System.Drawing.Point(34, 182);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(61, 13);
-            this.label24.TabIndex = 8;
-            this.label24.Text = "Database";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(180, 51);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(176, 21);
-            this.comboBox1.TabIndex = 7;
-            // 
-            // usernameBox
-            // 
-            this.usernameBox.Location = new System.Drawing.Point(180, 94);
-            this.usernameBox.Name = "usernameBox";
-            this.usernameBox.Size = new System.Drawing.Size(176, 20);
-            this.usernameBox.TabIndex = 6;
-            // 
-            // passwordBox
-            // 
-            this.passwordBox.Location = new System.Drawing.Point(180, 136);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.Size = new System.Drawing.Size(176, 20);
-            this.passwordBox.TabIndex = 5;
-            // 
-            // datBasBox
-            // 
-            this.datBasBox.Location = new System.Drawing.Point(180, 178);
-            this.datBasBox.Name = "datBasBox";
-            this.datBasBox.Size = new System.Drawing.Size(176, 20);
-            this.datBasBox.TabIndex = 4;
-            // 
-            // datBDis
-            // 
-            this.datBDis.Location = new System.Drawing.Point(228, 224);
-            this.datBDis.Name = "datBDis";
-            this.datBDis.Size = new System.Drawing.Size(128, 23);
-            this.datBDis.TabIndex = 3;
-            this.datBDis.Text = "Database - Disconnect";
-            this.datBDis.UseVisualStyleBackColor = true;
-            // 
-            // datBCon
-            // 
-            this.datBCon.Location = new System.Drawing.Point(50, 224);
-            this.datBCon.Name = "datBCon";
-            this.datBCon.Size = new System.Drawing.Size(130, 23);
-            this.datBCon.TabIndex = 2;
-            this.datBCon.Text = "Database - Connect";
-            this.datBCon.UseVisualStyleBackColor = true;
-            // 
-            // datBasStatLED
-            // 
-            this.datBasStatLED.Location = new System.Drawing.Point(281, 260);
-            this.datBasStatLED.Name = "datBasStatLED";
-            this.datBasStatLED.On = true;
-            this.datBasStatLED.Size = new System.Drawing.Size(75, 23);
-            this.datBasStatLED.TabIndex = 1;
-            this.datBasStatLED.Text = "ledBulb1";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(27, 265);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(177, 13);
-            this.label23.TabIndex = 0;
-            this.label23.Text = "Database Server Connection Status";
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label3);
@@ -311,15 +206,6 @@ namespace gui
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Serial Port Status";
-            // 
-            // serialPortStatusLED
-            // 
-            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
-            this.serialPortStatusLED.Name = "serialPortStatusLED";
-            this.serialPortStatusLED.On = true;
-            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
-            this.serialPortStatusLED.TabIndex = 6;
-            this.serialPortStatusLED.Text = "ledBulb1";
             // 
             // disconnectButton
             // 
@@ -594,6 +480,318 @@ namespace gui
             this.label4.TabIndex = 0;
             this.label4.Text = "PINA";
             // 
+            // portsLightsPage
+            // 
+            this.portsLightsPage.Controls.Add(this.groupBox4);
+            this.portsLightsPage.Controls.Add(this.groupBox3);
+            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
+            this.portsLightsPage.Name = "portsLightsPage";
+            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.portsLightsPage.Size = new System.Drawing.Size(428, 514);
+            this.portsLightsPage.TabIndex = 2;
+            this.portsLightsPage.Text = "Ports-Lights";
+            this.portsLightsPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lampPercentDisplay);
+            this.groupBox4.Controls.Add(this.lampIntensityScroll);
+            this.groupBox4.Controls.Add(this.lightDisplay);
+            this.groupBox4.Location = new System.Drawing.Point(6, 254);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(416, 254);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Light";
+            // 
+            // lampPercentDisplay
+            // 
+            this.lampPercentDisplay.Location = new System.Drawing.Point(138, 217);
+            this.lampPercentDisplay.Name = "lampPercentDisplay";
+            this.lampPercentDisplay.ReadOnly = true;
+            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
+            this.lampPercentDisplay.TabIndex = 6;
+            // 
+            // lampIntensityScroll
+            // 
+            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 47);
+            this.lampIntensityScroll.Maximum = 9;
+            this.lampIntensityScroll.Minimum = -100;
+            this.lampIntensityScroll.Name = "lampIntensityScroll";
+            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
+            this.lampIntensityScroll.TabIndex = 5;
+            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
+            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(416, 247);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ports";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(227, 31);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(147, 25);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Pot2 Voltage";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(36, 31);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(147, 25);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Pot1 Voltage";
+            // 
+            // tempControl
+            // 
+            this.tempControl.Controls.Add(this.groupBox5);
+            this.tempControl.Controls.Add(this.setpointTemp);
+            this.tempControl.Controls.Add(this.kpTuning);
+            this.tempControl.Controls.Add(this.kiTuning);
+            this.tempControl.Controls.Add(this.label21);
+            this.tempControl.Controls.Add(this.label20);
+            this.tempControl.Controls.Add(this.motorSpeedDisplay);
+            this.tempControl.Controls.Add(this.actualTempDisplay);
+            this.tempControl.Controls.Add(this.label19);
+            this.tempControl.Controls.Add(this.label18);
+            this.tempControl.Controls.Add(this.label17);
+            this.tempControl.Controls.Add(this.tempChart);
+            this.tempControl.Controls.Add(this.label16);
+            this.tempControl.Location = new System.Drawing.Point(4, 22);
+            this.tempControl.Name = "tempControl";
+            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
+            this.tempControl.Size = new System.Drawing.Size(428, 514);
+            this.tempControl.TabIndex = 3;
+            this.tempControl.Text = "Temp Control";
+            this.tempControl.UseVisualStyleBackColor = true;
+            // 
+            // setpointTemp
+            // 
+            this.setpointTemp.Location = new System.Drawing.Point(15, 47);
+            this.setpointTemp.Name = "setpointTemp";
+            this.setpointTemp.Size = new System.Drawing.Size(100, 20);
+            this.setpointTemp.TabIndex = 14;
+            this.setpointTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.setpointTemp.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            // 
+            // kpTuning
+            // 
+            this.kpTuning.Location = new System.Drawing.Point(42, 114);
+            this.kpTuning.Name = "kpTuning";
+            this.kpTuning.Size = new System.Drawing.Size(73, 20);
+            this.kpTuning.TabIndex = 13;
+            this.kpTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.kpTuning.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // kiTuning
+            // 
+            this.kiTuning.Location = new System.Drawing.Point(42, 147);
+            this.kiTuning.Name = "kiTuning";
+            this.kiTuning.Size = new System.Drawing.Size(73, 20);
+            this.kiTuning.TabIndex = 12;
+            this.kiTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.kiTuning.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(23, 281);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(85, 13);
+            this.label21.TabIndex = 11;
+            this.label21.Text = "Motor Speed [%]";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(25, 228);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(83, 13);
+            this.label20.TabIndex = 10;
+            this.label20.Text = "Actual Temp [C]";
+            // 
+            // motorSpeedDisplay
+            // 
+            this.motorSpeedDisplay.Enabled = false;
+            this.motorSpeedDisplay.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.motorSpeedDisplay.Location = new System.Drawing.Point(15, 297);
+            this.motorSpeedDisplay.Name = "motorSpeedDisplay";
+            this.motorSpeedDisplay.ReadOnly = true;
+            this.motorSpeedDisplay.Size = new System.Drawing.Size(100, 20);
+            this.motorSpeedDisplay.TabIndex = 9;
+            this.motorSpeedDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // actualTempDisplay
+            // 
+            this.actualTempDisplay.Enabled = false;
+            this.actualTempDisplay.Location = new System.Drawing.Point(15, 244);
+            this.actualTempDisplay.Name = "actualTempDisplay";
+            this.actualTempDisplay.ReadOnly = true;
+            this.actualTempDisplay.Size = new System.Drawing.Size(100, 20);
+            this.actualTempDisplay.TabIndex = 8;
+            this.actualTempDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(18, 151);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(16, 13);
+            this.label19.TabIndex = 7;
+            this.label19.Text = "Ki";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(16, 118);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(20, 13);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Kp";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(34, 87);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 13);
+            this.label17.TabIndex = 5;
+            this.label17.Text = "PI Tuning";
+            // 
+            // tempChart
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea2);
+            this.tempChart.Location = new System.Drawing.Point(131, 47);
+            this.tempChart.Name = "tempChart";
+            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.IsXValueIndexed = true;
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series2);
+            this.tempChart.Size = new System.Drawing.Size(292, 300);
+            this.tempChart.TabIndex = 2;
+            this.tempChart.Text = "chart1";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(12, 21);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(109, 13);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "Setpoint Temp [C]";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.groupBox7);
+            this.groupBox5.Controls.Add(this.groupBox6);
+            this.groupBox5.Location = new System.Drawing.Point(6, 352);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(416, 154);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Cloud Data Logging";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.textBox1);
+            this.groupBox6.Controls.Add(this.insDat);
+            this.groupBox6.Location = new System.Drawing.Point(6, 26);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(193, 110);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Manual Data Logging";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.disDatLog);
+            this.groupBox7.Controls.Add(this.label22);
+            this.groupBox7.Controls.Add(this.enbDatLog);
+            this.groupBox7.Location = new System.Drawing.Point(210, 26);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(200, 110);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Auto Data Logging";
+            // 
+            // enbDatLog
+            // 
+            this.enbDatLog.Location = new System.Drawing.Point(6, 29);
+            this.enbDatLog.Name = "enbDatLog";
+            this.enbDatLog.Size = new System.Drawing.Size(188, 23);
+            this.enbDatLog.TabIndex = 0;
+            this.enbDatLog.Text = "Enable Data Logging";
+            this.enbDatLog.UseVisualStyleBackColor = true;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(35, 60);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(133, 13);
+            this.label22.TabIndex = 1;
+            this.label22.Text = "Data Logging Not Enabled";
+            // 
+            // disDatLog
+            // 
+            this.disDatLog.Enabled = false;
+            this.disDatLog.Location = new System.Drawing.Point(6, 81);
+            this.disDatLog.Name = "disDatLog";
+            this.disDatLog.Size = new System.Drawing.Size(188, 23);
+            this.disDatLog.TabIndex = 2;
+            this.disDatLog.Text = "Stop Data Logging";
+            this.disDatLog.UseVisualStyleBackColor = true;
+            // 
+            // insDat
+            // 
+            this.insDat.Location = new System.Drawing.Point(6, 81);
+            this.insDat.Name = "insDat";
+            this.insDat.Size = new System.Drawing.Size(181, 23);
+            this.insDat.TabIndex = 0;
+            this.insDat.Text = "Insert Data to Table";
+            this.insDat.UseVisualStyleBackColor = true;
+            // 
+            // serialPortStatusLED
+            // 
+            this.serialPortStatusLED.Location = new System.Drawing.Point(185, 153);
+            this.serialPortStatusLED.Name = "serialPortStatusLED";
+            this.serialPortStatusLED.On = true;
+            this.serialPortStatusLED.Size = new System.Drawing.Size(75, 23);
+            this.serialPortStatusLED.TabIndex = 6;
+            this.serialPortStatusLED.Text = "ledBulb1";
+            // 
             // pa4LED
             // 
             this.pa4LED.Color = System.Drawing.Color.Red;
@@ -704,48 +902,6 @@ namespace gui
             this.sevenSegment1.TabStop = false;
             this.sevenSegment1.Value = null;
             // 
-            // portsLightsPage
-            // 
-            this.portsLightsPage.Controls.Add(this.groupBox4);
-            this.portsLightsPage.Controls.Add(this.groupBox3);
-            this.portsLightsPage.Location = new System.Drawing.Point(4, 22);
-            this.portsLightsPage.Name = "portsLightsPage";
-            this.portsLightsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.portsLightsPage.Size = new System.Drawing.Size(428, 514);
-            this.portsLightsPage.TabIndex = 2;
-            this.portsLightsPage.Text = "Ports-Lights";
-            this.portsLightsPage.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.lampPercentDisplay);
-            this.groupBox4.Controls.Add(this.lampIntensityScroll);
-            this.groupBox4.Controls.Add(this.lightDisplay);
-            this.groupBox4.Location = new System.Drawing.Point(6, 254);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(416, 254);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Light";
-            // 
-            // lampPercentDisplay
-            // 
-            this.lampPercentDisplay.Location = new System.Drawing.Point(138, 217);
-            this.lampPercentDisplay.Name = "lampPercentDisplay";
-            this.lampPercentDisplay.ReadOnly = true;
-            this.lampPercentDisplay.Size = new System.Drawing.Size(45, 20);
-            this.lampPercentDisplay.TabIndex = 6;
-            // 
-            // lampIntensityScroll
-            // 
-            this.lampIntensityScroll.Location = new System.Drawing.Point(94, 47);
-            this.lampIntensityScroll.Maximum = 9;
-            this.lampIntensityScroll.Minimum = -100;
-            this.lampIntensityScroll.Name = "lampIntensityScroll";
-            this.lampIntensityScroll.Size = new System.Drawing.Size(31, 190);
-            this.lampIntensityScroll.TabIndex = 5;
-            this.lampIntensityScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.lampIntensityScroll_Scroll);
-            // 
             // lightDisplay
             // 
             this.lightDisplay.BackColor = System.Drawing.Color.Transparent;
@@ -761,19 +917,6 @@ namespace gui
             this.lightDisplay.TabIndex = 4;
             this.lightDisplay.ThresholdPercent = 0F;
             this.lightDisplay.Value = 0F;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.pot2VoltageDisplay);
-            this.groupBox3.Controls.Add(this.pot1VoltageDisplay);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(416, 247);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Ports";
             // 
             // pot2VoltageDisplay
             // 
@@ -807,111 +950,6 @@ namespace gui
             this.pot1VoltageDisplay.ThresholdPercent = 0F;
             this.pot1VoltageDisplay.Value = 0F;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(227, 31);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(147, 25);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Pot2 Voltage";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(36, 31);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(147, 25);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Pot1 Voltage";
-            // 
-            // tempControl
-            // 
-            this.tempControl.Controls.Add(this.groupBox5);
-            this.tempControl.Controls.Add(this.setpointTemp);
-            this.tempControl.Controls.Add(this.kpTuning);
-            this.tempControl.Controls.Add(this.kiTuning);
-            this.tempControl.Controls.Add(this.label21);
-            this.tempControl.Controls.Add(this.label20);
-            this.tempControl.Controls.Add(this.motorSpeedDisplay);
-            this.tempControl.Controls.Add(this.actualTempDisplay);
-            this.tempControl.Controls.Add(this.label19);
-            this.tempControl.Controls.Add(this.label18);
-            this.tempControl.Controls.Add(this.label17);
-            this.tempControl.Controls.Add(this.tempChart);
-            this.tempControl.Controls.Add(this.label16);
-            this.tempControl.Location = new System.Drawing.Point(4, 22);
-            this.tempControl.Name = "tempControl";
-            this.tempControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tempControl.Size = new System.Drawing.Size(428, 514);
-            this.tempControl.TabIndex = 3;
-            this.tempControl.Text = "Temp Control";
-            this.tempControl.UseVisualStyleBackColor = true;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.groupBox7);
-            this.groupBox5.Controls.Add(this.groupBox6);
-            this.groupBox5.Location = new System.Drawing.Point(6, 352);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(416, 154);
-            this.groupBox5.TabIndex = 15;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Cloud Data Logging";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.disDatLog);
-            this.groupBox7.Controls.Add(this.label22);
-            this.groupBox7.Controls.Add(this.enbDatLog);
-            this.groupBox7.Location = new System.Drawing.Point(210, 26);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(200, 110);
-            this.groupBox7.TabIndex = 1;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Auto Data Logging";
-            // 
-            // disDatLog
-            // 
-            this.disDatLog.Enabled = false;
-            this.disDatLog.Location = new System.Drawing.Point(6, 81);
-            this.disDatLog.Name = "disDatLog";
-            this.disDatLog.Size = new System.Drawing.Size(188, 23);
-            this.disDatLog.TabIndex = 2;
-            this.disDatLog.Text = "Stop Data Logging";
-            this.disDatLog.UseVisualStyleBackColor = true;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(35, 60);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(133, 13);
-            this.label22.TabIndex = 1;
-            this.label22.Text = "Data Logging Not Enabled";
-            // 
-            // enbDatLog
-            // 
-            this.enbDatLog.Location = new System.Drawing.Point(6, 29);
-            this.enbDatLog.Name = "enbDatLog";
-            this.enbDatLog.Size = new System.Drawing.Size(188, 23);
-            this.enbDatLog.TabIndex = 0;
-            this.enbDatLog.Text = "Enable Data Logging";
-            this.enbDatLog.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.textBox1);
-            this.groupBox6.Controls.Add(this.insDat);
-            this.groupBox6.Location = new System.Drawing.Point(6, 26);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(193, 110);
-            this.groupBox6.TabIndex = 0;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Manual Data Logging";
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 55);
@@ -919,149 +957,110 @@ namespace gui
             this.textBox1.Size = new System.Drawing.Size(181, 20);
             this.textBox1.TabIndex = 1;
             // 
-            // insDat
+            // label23
             // 
-            this.insDat.Location = new System.Drawing.Point(6, 81);
-            this.insDat.Name = "insDat";
-            this.insDat.Size = new System.Drawing.Size(181, 23);
-            this.insDat.TabIndex = 0;
-            this.insDat.Text = "Insert Data to Table";
-            this.insDat.UseVisualStyleBackColor = true;
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(27, 265);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(177, 13);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "Database Server Connection Status";
             // 
-            // setpointTemp
+            // datBasStatLED
             // 
-            this.setpointTemp.Location = new System.Drawing.Point(15, 47);
-            this.setpointTemp.Name = "setpointTemp";
-            this.setpointTemp.Size = new System.Drawing.Size(100, 20);
-            this.setpointTemp.TabIndex = 14;
-            this.setpointTemp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.setpointTemp.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
+            this.datBasStatLED.Location = new System.Drawing.Point(281, 260);
+            this.datBasStatLED.Name = "datBasStatLED";
+            this.datBasStatLED.On = true;
+            this.datBasStatLED.Size = new System.Drawing.Size(75, 23);
+            this.datBasStatLED.TabIndex = 1;
+            this.datBasStatLED.Text = "ledBulb1";
             // 
-            // kpTuning
+            // datBCon
             // 
-            this.kpTuning.Location = new System.Drawing.Point(42, 114);
-            this.kpTuning.Name = "kpTuning";
-            this.kpTuning.Size = new System.Drawing.Size(73, 20);
-            this.kpTuning.TabIndex = 13;
-            this.kpTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.kpTuning.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.datBCon.Location = new System.Drawing.Point(50, 224);
+            this.datBCon.Name = "datBCon";
+            this.datBCon.Size = new System.Drawing.Size(130, 23);
+            this.datBCon.TabIndex = 2;
+            this.datBCon.Text = "Database - Connect";
+            this.datBCon.UseVisualStyleBackColor = true;
             // 
-            // kiTuning
+            // datBDis
             // 
-            this.kiTuning.Location = new System.Drawing.Point(42, 147);
-            this.kiTuning.Name = "kiTuning";
-            this.kiTuning.Size = new System.Drawing.Size(73, 20);
-            this.kiTuning.TabIndex = 12;
-            this.kiTuning.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.kiTuning.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.datBDis.Location = new System.Drawing.Point(228, 224);
+            this.datBDis.Name = "datBDis";
+            this.datBDis.Size = new System.Drawing.Size(128, 23);
+            this.datBDis.TabIndex = 3;
+            this.datBDis.Text = "Database - Disconnect";
+            this.datBDis.UseVisualStyleBackColor = true;
             // 
-            // label21
+            // datBasBox
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(23, 281);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(85, 13);
-            this.label21.TabIndex = 11;
-            this.label21.Text = "Motor Speed [%]";
+            this.datBasBox.Location = new System.Drawing.Point(180, 178);
+            this.datBasBox.Name = "datBasBox";
+            this.datBasBox.Size = new System.Drawing.Size(176, 20);
+            this.datBasBox.TabIndex = 4;
             // 
-            // label20
+            // passwordBox
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(25, 228);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(83, 13);
-            this.label20.TabIndex = 10;
-            this.label20.Text = "Actual Temp [C]";
+            this.passwordBox.Location = new System.Drawing.Point(180, 136);
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.Size = new System.Drawing.Size(176, 20);
+            this.passwordBox.TabIndex = 5;
             // 
-            // motorSpeedDisplay
+            // usernameBox
             // 
-            this.motorSpeedDisplay.Enabled = false;
-            this.motorSpeedDisplay.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.motorSpeedDisplay.Location = new System.Drawing.Point(15, 297);
-            this.motorSpeedDisplay.Name = "motorSpeedDisplay";
-            this.motorSpeedDisplay.ReadOnly = true;
-            this.motorSpeedDisplay.Size = new System.Drawing.Size(100, 20);
-            this.motorSpeedDisplay.TabIndex = 9;
-            this.motorSpeedDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.usernameBox.Location = new System.Drawing.Point(180, 94);
+            this.usernameBox.Name = "usernameBox";
+            this.usernameBox.Size = new System.Drawing.Size(176, 20);
+            this.usernameBox.TabIndex = 6;
             // 
-            // actualTempDisplay
+            // comboBox1
             // 
-            this.actualTempDisplay.Enabled = false;
-            this.actualTempDisplay.Location = new System.Drawing.Point(15, 244);
-            this.actualTempDisplay.Name = "actualTempDisplay";
-            this.actualTempDisplay.ReadOnly = true;
-            this.actualTempDisplay.Size = new System.Drawing.Size(100, 20);
-            this.actualTempDisplay.TabIndex = 8;
-            this.actualTempDisplay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(180, 51);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(176, 21);
+            this.comboBox1.TabIndex = 7;
             // 
-            // label19
+            // label24
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(18, 151);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(16, 13);
-            this.label19.TabIndex = 7;
-            this.label19.Text = "Ki";
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label24.Location = new System.Drawing.Point(34, 182);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(61, 13);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "Database";
             // 
-            // label18
+            // label25
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(16, 118);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(20, 13);
-            this.label18.TabIndex = 6;
-            this.label18.Text = "Kp";
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label25.Location = new System.Drawing.Point(34, 140);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(61, 13);
+            this.label25.TabIndex = 9;
+            this.label25.Text = "Password";
             // 
-            // label17
+            // label26
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(34, 87);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 13);
-            this.label17.TabIndex = 5;
-            this.label17.Text = "PI Tuning";
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label26.Location = new System.Drawing.Point(34, 98);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(63, 13);
+            this.label26.TabIndex = 10;
+            this.label26.Text = "Username";
             // 
-            // tempChart
+            // label27
             // 
-            chartArea1.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea1);
-            this.tempChart.Location = new System.Drawing.Point(131, 47);
-            this.tempChart.Name = "tempChart";
-            this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.BorderWidth = 5;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.IsXValueIndexed = true;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 4;
-            this.tempChart.Series.Add(series1);
-            this.tempChart.Size = new System.Drawing.Size(292, 300);
-            this.tempChart.TabIndex = 2;
-            this.tempChart.Text = "chart1";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(12, 21);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(109, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "Setpoint Temp [C]";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label27.Location = new System.Drawing.Point(34, 55);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(80, 13);
+            this.label27.TabIndex = 11;
+            this.label27.Text = "Server Name";
             // 
             // Form1
             // 
@@ -1086,15 +1085,15 @@ namespace gui
             this.groupBox3.PerformLayout();
             this.tempControl.ResumeLayout(false);
             this.tempControl.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.setpointTemp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kpTuning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kiTuning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tempChart)).EndInit();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }

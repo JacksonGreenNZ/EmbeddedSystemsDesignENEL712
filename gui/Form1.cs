@@ -28,6 +28,7 @@ namespace gui
         private int x;
         MySqlConnection conn;
         string connString;
+        private bool shouldLogData = false;
 
         public Form1()
         {
@@ -197,21 +198,24 @@ namespace gui
 
         private void datBDis_Click(object sender, EventArgs e)
         {
-            try 
-            { 
-                conn.Close();
-                if (conn.State == ConnectionState.Closed)
+            if (conn != null)
+            {
+                try
                 {
-                    datBasStatLED.On = false;
-                    datBDis.Enabled = false;
-                    datBCon.Enabled = true;
+                    conn.Close();
+                    if (conn.State == ConnectionState.Closed)
+                    {
+                        datBasStatLED.On = false;
+                        datBDis.Enabled = false;
+                        datBCon.Enabled = true;
+                    }
+                }
+
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-
-            catch(MySqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            } 
         }
 
         // DIGI IO PAGE //
@@ -405,7 +409,100 @@ namespace gui
             int kp = (int)kpTuning.Value;
             int ki = (int)kiTuning.Value;
             piLogic(desiredTemp, kp, ki);
-        }      
+
+            if (shouldLogData)
+            {
+                double currentTemp = appBoard.ReadTemp();
+                currentTemp = (currentTemp / 255) * 5;
+                currentTemp = currentTemp / 0.05;
+                currentTemp = Math.Round(currentTemp, 2);
+                DateTime currentTime = DateTime.Now;
+
+                // Insert data to the database
+                addDataToDatabase(currentTemp, currentTime);
+            }
+
+        }
+
+        //   DATA LOGGING   //
+
+        private void insDat_Click(object sender, EventArgs e)
+        {
+            string query = "INSERT INTO temperature (remark) VALUES (@data)";
+            string data2Send = manualData.Text;
+            try
+            {
+                if(this.conn != null)
+                {
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@data", data2Send);
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Remark Added");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Database not Connected");
+                }
+            }
+            catch(MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void enbDatLog_Click(object sender, EventArgs e)
+        {
+            shouldLogData = !shouldLogData;
+            enbDatLog.Enabled = false;
+            disDatLog.Enabled = true;
+        }
+
+        private void disDatLog_Click(object sender, EventArgs e)
+        {
+            shouldLogData = !shouldLogData;
+            enbDatLog.Enabled = true;
+            disDatLog.Enabled = false;
+        }
+
+        public void addDataToDatabase(double currentTemp, DateTime currentTime)
+        {
+            string query = "INSERT INTO temperature (timeStamp, temp) VALUES (@timedata, @tempdata)";
+            try
+            {
+                if (this.conn != null)
+                {
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@timedata", currentTime);
+                        cmd.Parameters.AddWithValue("@tempdata", currentTemp);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Database not Connected");
+                    shouldLogData = !shouldLogData;
+                    enbDatLog.Enabled = true;
+                    disDatLog.Enabled = false;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("MySQL Error: " + ex.Message);
+                shouldLogData = !shouldLogData;
+                enbDatLog.Enabled = true;
+                disDatLog.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                shouldLogData = !shouldLogData;
+                enbDatLog.Enabled = true;
+                disDatLog.Enabled = false;
+            }
+        }
     }
 }
 

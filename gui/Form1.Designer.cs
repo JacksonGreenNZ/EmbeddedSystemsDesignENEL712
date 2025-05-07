@@ -29,8 +29,8 @@ namespace gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.setupPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,7 +38,7 @@ namespace gui
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.addressBox = new System.Windows.Forms.ComboBox();
             this.usernameBox = new System.Windows.Forms.TextBox();
             this.passwordBox = new System.Windows.Forms.TextBox();
             this.datBasBox = new System.Windows.Forms.TextBox();
@@ -166,7 +166,7 @@ namespace gui
             this.groupBox2.Controls.Add(this.label26);
             this.groupBox2.Controls.Add(this.label25);
             this.groupBox2.Controls.Add(this.label24);
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.addressBox);
             this.groupBox2.Controls.Add(this.usernameBox);
             this.groupBox2.Controls.Add(this.passwordBox);
             this.groupBox2.Controls.Add(this.datBasBox);
@@ -221,13 +221,14 @@ namespace gui
             this.label24.TabIndex = 8;
             this.label24.Text = "Database";
             // 
-            // comboBox1
+            // addressBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(180, 51);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(176, 21);
-            this.comboBox1.TabIndex = 7;
+            this.addressBox.FormattingEnabled = true;
+            this.addressBox.Location = new System.Drawing.Point(180, 51);
+            this.addressBox.Name = "addressBox";
+            this.addressBox.Size = new System.Drawing.Size(176, 21);
+            this.addressBox.TabIndex = 7;
+            this.addressBox.Text = "127.0.0.1";
             // 
             // usernameBox
             // 
@@ -235,13 +236,17 @@ namespace gui
             this.usernameBox.Name = "usernameBox";
             this.usernameBox.Size = new System.Drawing.Size(176, 20);
             this.usernameBox.TabIndex = 6;
+            this.usernameBox.Text = "ST123456";
             // 
             // passwordBox
             // 
             this.passwordBox.Location = new System.Drawing.Point(180, 136);
             this.passwordBox.Name = "passwordBox";
+            this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(176, 20);
             this.passwordBox.TabIndex = 5;
+            this.passwordBox.Text = "1-Ph1UKgdSYEFzob";
+            this.passwordBox.UseSystemPasswordChar = true;
             // 
             // datBasBox
             // 
@@ -249,15 +254,18 @@ namespace gui
             this.datBasBox.Name = "datBasBox";
             this.datBasBox.Size = new System.Drawing.Size(176, 20);
             this.datBasBox.TabIndex = 4;
+            this.datBasBox.Text = "temp_rec";
             // 
             // datBDis
             // 
+            this.datBDis.Enabled = false;
             this.datBDis.Location = new System.Drawing.Point(228, 224);
             this.datBDis.Name = "datBDis";
             this.datBDis.Size = new System.Drawing.Size(128, 23);
             this.datBDis.TabIndex = 3;
             this.datBDis.Text = "Database - Disconnect";
             this.datBDis.UseVisualStyleBackColor = true;
+            this.datBDis.Click += new System.EventHandler(this.datBDis_Click);
             // 
             // datBCon
             // 
@@ -267,6 +275,7 @@ namespace gui
             this.datBCon.TabIndex = 2;
             this.datBCon.Text = "Database - Connect";
             this.datBCon.UseVisualStyleBackColor = true;
+            this.datBCon.Click += new System.EventHandler(this.datBCon_Click);
             // 
             // datBasStatLED
             // 
@@ -1036,18 +1045,18 @@ namespace gui
             // 
             // tempChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.tempChart.ChartAreas.Add(chartArea3);
+            chartArea2.Name = "ChartArea1";
+            this.tempChart.ChartAreas.Add(chartArea2);
             this.tempChart.Location = new System.Drawing.Point(131, 47);
             this.tempChart.Name = "tempChart";
             this.tempChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series3.BorderWidth = 5;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series3.IsXValueIndexed = true;
-            series3.Name = "Series1";
-            series3.YValuesPerPoint = 4;
-            this.tempChart.Series.Add(series3);
+            series2.BorderWidth = 5;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.IsXValueIndexed = true;
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 4;
+            this.tempChart.Series.Add(series2);
             this.tempChart.Size = new System.Drawing.Size(292, 300);
             this.tempChart.TabIndex = 2;
             this.tempChart.Text = "chart1";
@@ -1182,7 +1191,7 @@ namespace gui
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox addressBox;
         private System.Windows.Forms.TextBox usernameBox;
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.TextBox datBasBox;

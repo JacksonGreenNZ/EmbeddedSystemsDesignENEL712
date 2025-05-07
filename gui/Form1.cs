@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.CodeDom;
 using System.Windows.Forms.DataVisualization.Charting;
+using MySql.Data.MySqlClient;
 
 namespace gui
 {
@@ -25,6 +26,9 @@ namespace gui
         private double integral;
         private double prev_error;
         private int x;
+        MySqlConnection conn;
+        string connString;
+
         public Form1()
         {
             appBoard = new AppBoard();
@@ -161,7 +165,56 @@ namespace gui
             serialPortStatusLED.On = false;
         }
 
-                // DIGI IO PAGE //
+        //    SQL STUFF     //
+
+        private void datBCon_Click(object sender, EventArgs e)
+        {
+            string uid = usernameBox.Text;
+            string pass = passwordBox.Text;
+            string address = addressBox.Text;
+            string database = datBasBox.Text;
+
+            string connString = $"SERVER={address};PORT=3306;DATABASE={database};UID={uid};PASSWORD={pass};";
+            try
+            {
+                conn = new MySqlConnection();
+                conn.ConnectionString = connString;
+                conn.Open();
+                MessageBox.Show("Connection Successful");
+                if (conn.State == ConnectionState.Open)
+                {
+                    datBasStatLED.On = true;
+                    datBDis.Enabled = true;
+                    datBCon.Enabled = false;
+                }
+            }
+            catch(MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private void datBDis_Click(object sender, EventArgs e)
+        {
+            try 
+            { 
+                conn.Close();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    datBasStatLED.On = false;
+                    datBDis.Enabled = false;
+                    datBCon.Enabled = true;
+                }
+            }
+
+            catch(MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            } 
+        }
+
+        // DIGI IO PAGE //
 
         public byte getPORTCValue()
         {
@@ -352,7 +405,7 @@ namespace gui
             int kp = (int)kpTuning.Value;
             int ki = (int)kiTuning.Value;
             piLogic(desiredTemp, kp, ki);
-        }
+        }      
     }
 }
 

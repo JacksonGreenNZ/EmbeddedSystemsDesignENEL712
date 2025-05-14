@@ -5,12 +5,6 @@
  * Author : qtr1230
  */ 
 
-/*NOTES
-isr(usart1_rx_vect) is the key interrupt, while(1) shouldn't contain much
- DO BASIC LOGIC FOR INSTRUCTIONS ON C
-LOGIC HANDLED BY C SHARP
-*/
-
 #define F_CPU 8000000UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -18,8 +12,6 @@ LOGIC HANDLED BY C SHARP
 
 #define startConversion ADCSRA |= (1<<6) //initiates conversion
 #define conversionRunning ADCSRA & (1<<6) //bit is cleared on conversion complete
-#define tx_buffer_empty (UCSR1A & (1<<UDRE1)) //nothing in transmit buffer
-//while (!tx_buffer_empty);//wait for transmitter to fill up USE LATER
 
 char *receiveByte;
 
@@ -55,10 +47,34 @@ char readADC(char channel)
 	
 	while(conversionRunning);
 
-	return(ADCH);//change this to send over usart, currently returning so testable
+	return(ADCH);
 }
 
 /////////READ FUNCTIONS BEGIN //////////
+
+void read(unsigned instruction){//read functions
+	switch(instruction){
+		case 0x00:
+		txCheck();
+		break;
+		case 0x01:
+		readPINA();
+		break;
+		case 0x02:
+		readPOT1();
+		break;
+		case 0x03:
+		readPOT2();
+		break;
+		case 0x04:
+		readTemp();
+		break;
+		case 0x05:
+		readLight();
+		break;
+	}
+}
+
 void txCheck(){
 	UDR1 = 0x0F;
 }
@@ -85,6 +101,24 @@ void readLight(){
 
 
 /////////WRITE FUNCTIONS BEGIN //////////
+
+void write(unsigned char instruction, unsigned char lsb, int sixteenbit){ //write functions
+	switch(instruction){
+		case 0x0A:
+		setPORTC(lsb);
+		break;
+		case 0x0B:
+		setHeater(sixteenbit);
+		break;
+		case 0x0C:
+		setLight(sixteenbit);
+		break;
+		case 0x0D:
+		setMotor(sixteenbit);
+		break;
+	}
+}
+
 void setPORTC(unsigned char lsb){
 	//write the 8 LSB to PORTC, return 0x0A over udr1
 	PORTC = lsb;
@@ -104,49 +138,6 @@ void setLight(int sixteenbit){
 void setMotor(int sixteenbit){
 	OCR1A = sixteenbit;
 	UDR1 = 0x0D;
-}
-
-/////////READ/WRITE FUNCTIONS END //////////
-
-
-void write(unsigned char instruction, unsigned char lsb, int sixteenbit){ //write functions
-	switch(instruction){
-		case 0x0A:
-			setPORTC(lsb);
-			break;
-		case 0x0B:
-			setHeater(sixteenbit);
-			break;	
-		case 0x0C:
-			setLight(sixteenbit);
-			break;	
-		case 0x0D:
-			setMotor(sixteenbit);
-			break;
-	}
-}
-
-void read(unsigned instruction){//read functions
-		switch(instruction){
-			case 0x00:
-				txCheck();
-				break;
-			case 0x01:
-				readPINA();
-				break;
-			case 0x02:
-				readPOT1();
-				break;
-			case 0x03:
-				readPOT2();
-				break;
-			case 0x04:
-				readTemp();
-				break;
-			case 0x05:
-				readLight();
-				break;
-		}
 }
 
 ////////INTERRUPT///////////
@@ -237,19 +228,15 @@ void setup(){
 	//conversion
 	ADCSRA = 0b10000111;
 	
-	//pwm toms settings
+	//pwm settings
 	TCCR1A = 0b10101010;
 	TCCR1B = 0b00011001;
 	ICR1 = 399;
 	
-	//fastpwm 8 bit, top = irc1 = 399 old settings
-	//TCCR1A = 0b10100101;
-	//TCCR1B = 0b00000001;
-	
 	cli();
 	sei();
 	
-	UCSR1B = 0b10011000; //usart tx/rx on, enable recieve complete interrupt 
+	UCSR1B = 0b10011000; //usart tx/rx on, enable receive complete interrupt 
 	UCSR1C = 0b00000110;//async no parity bit, 1 stop bit, 8 bit char size
 	UBRR1L = 12; //38400 buad
 	
@@ -263,7 +250,5 @@ void setup(){
 int main(void)
 {
 	setup();
-    while (1) 
-    {
-    }
+    while (1){}
 }

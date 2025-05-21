@@ -73,10 +73,17 @@ namespace gui
             appTimer.Start();
         }
 
+        public void isMCUConnected()
+        {
+            if (!appBoard.serialPort.IsOpen) { tabControl1.TabIndex = 0; }
+        }
+
         private void appTabs_SelectedIndexChanged(object sender, EventArgs e) // TAB CONTROL
         {
-            switch (tabControl1.SelectedIndex)
+            if (appBoard.serialPort.IsOpen)
             {
+                switch (tabControl1.SelectedIndex)
+                {
                 case 0: // Setup Tab
                     appTimer.Stop();
                     appBoard.tempTabClosed();
@@ -86,7 +93,7 @@ namespace gui
                     UpdateTimerEvent(digIO_Tick);
                     appBoard.tempTabClosed();
                     break;
-
+                   
                 case 2: // Pot Tab
                     UpdateTimerEvent(pot_tick);
                     appBoard.tempTabClosed();
@@ -99,6 +106,17 @@ namespace gui
                     appBoard.WriteHeat("on");
                     UpdateTimerEvent(temp_tick);
                     break;
+                }
+            }
+            else
+            {
+                if(tabControl1.SelectedIndex == 0)
+                {}
+                else
+                {
+                    MessageBox.Show("Port is not Open");
+                    tabControl1.SelectTab(0);
+                }
             }
         }
         
@@ -285,10 +303,10 @@ namespace gui
             
             catch (Exception ex)
             {
-                tabControl1.SelectedIndex = 0;//boot back to setup page
+                appTimer.Stop();
+                tabControl1.SelectTab(0);
                 MessageBox.Show($"Error: {ex.Message}");
             } 
-
         }
 
                 // POT TAB //
@@ -331,7 +349,8 @@ namespace gui
             }
             catch (Exception ex)
             {
-                tabControl1.SelectedIndex = 0;
+                appTimer.Stop();
+                tabControl1.SelectTab(0);
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
@@ -405,23 +424,30 @@ namespace gui
 
         void temp_tick(object sender, EventArgs e)
         {
-            double desiredTemp = (double)setpointTemp.Value;
-            int kp = (int)kpTuning.Value;
-            int ki = (int)kiTuning.Value;
-            piLogic(desiredTemp, kp, ki);
-
-            if (shouldLogData)
+            try
             {
-                double currentTemp = appBoard.ReadTemp();
-                currentTemp = (currentTemp / 255) * 5;
-                currentTemp = currentTemp / 0.05;
-                currentTemp = Math.Round(currentTemp, 2);
-                DateTime currentTime = DateTime.Now;
+                double desiredTemp = (double)setpointTemp.Value;
+                int kp = (int)kpTuning.Value;
+                int ki = (int)kiTuning.Value;
+                piLogic(desiredTemp, kp, ki);
 
-                // Insert data to the database
-                addDataToDatabase(currentTemp, currentTime);
+                if (shouldLogData)
+                {
+                    double currentTemp = appBoard.ReadTemp();
+                    currentTemp = (currentTemp / 255) * 5;
+                    currentTemp = currentTemp / 0.05;
+                    currentTemp = Math.Round(currentTemp, 2);
+                    DateTime currentTime = DateTime.Now;
+
+                    // Insert data to the database
+                    addDataToDatabase(currentTemp, currentTime);
+                }
             }
-
+            catch (Exception ex) {
+                appTimer.Stop();
+                tabControl1.SelectTab(0);
+                MessageBox.Show($"Error: {ex.Message}");
+            }
         }
 
         //   DATA LOGGING   //

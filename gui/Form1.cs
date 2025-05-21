@@ -74,7 +74,7 @@ namespace gui
 
         public void isMCUConnected()
         {
-            if (!appBoard.serialPort.IsOpen) { tabControl1.TabIndex = 0; }
+            if (!appBoard.serialPort.IsOpen) { MessageBox.Show("Port is not Open");tabControl1.SelectTab(0); }
         }
 
         private void appTabs_SelectedIndexChanged(object sender, EventArgs e) // TAB CONTROL
@@ -109,17 +109,14 @@ namespace gui
             }
             else
             {
-                if(tabControl1.SelectedIndex == 0)
-                {}
-                else
+                if(tabControl1.SelectedIndex != 0)
                 {
-                    MessageBox.Show("Port is not Open");
+                    MessageBox.Show("Port is not open");
                     tabControl1.SelectTab(0);
                 }
             }
         }
         
-
         // SETUP PAGE //
 
         private void setupCombos() // sets default baud rate to 38400
@@ -530,6 +527,3 @@ namespace gui
         }
     }
 }
-
-
-

@@ -55,11 +55,10 @@ namespace gui
                 }
                 lampIntensityScroll.Value = 0;
                 lampPercentDisplay.Text = "0%";
-                appBoard.WriteHeat("off");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Note: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 

@@ -131,13 +131,13 @@ namespace gui
                 int baudint = 0;
                 Int32.TryParse(baudRateDropdown.Text, out baudint);
 
-                // Disable UI to avoid double-clicking while connecting
+                //disable UI to avoid double-clicking while connecting
                 connectButton.Enabled = false;
 
-                // Trigger async connect with a callback
+                //trigger async connect with a callback
                 appBoard.Connect(comPortDropdown.Text, baudint, () =>
                 {
-                    // Called from background thread, so invoke UI-safe changes
+                    //called from background thread, so invoke UI-safe changes
                     if (InvokeRequired)
                     {
                         Invoke(new Action(UIConnectResponse));
@@ -161,7 +161,6 @@ namespace gui
             {
                 connectButton.Enabled = false;
                 disconnectButton.Enabled = true;
-                connectButton.Enabled = false;
                 serialPortStatusLED.On = true;
             }
             else
@@ -172,7 +171,7 @@ namespace gui
 
         private void disconnectButton_Click(object sender, EventArgs e)
         {
-            appBoard.Disconnect(); // Use AppBoard to disconnect
+            appBoard.Disconnect(); //use AppBoard to disconnect
             //turn stuff on/off accordingly
             disconnectButton.Enabled = false;
             connectButton.Enabled = true;

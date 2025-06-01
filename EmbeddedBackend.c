@@ -80,7 +80,7 @@ void txCheck(){
 }
 
 void readPINA(){
-	UDR1=PINA;
+	UDR1=~PINA;
 }
 
 void readPOT1(){

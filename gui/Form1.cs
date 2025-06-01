@@ -291,9 +291,9 @@ namespace gui
             try
             {
                 appBoard.WritePORTC(getPORTCValue());// button checks sent to board to display on portc
+                displayByteInHex(getPORTCValue());//display on seven segment
                 byte PINAVal = appBoard.ReadPINA(); // get which switches are flipped
                 setPINALEDs(PINAVal);//set appropriately
-                displayByteInHex(PINAVal);//display on seven segment
             }
             
             catch (Exception ex)
@@ -330,7 +330,7 @@ namespace gui
 
         void lampScroll()
         {
-            byte[] value = BitConverter.GetBytes(-255*(lampIntensityScroll.Value)/100);
+            byte[] value = BitConverter.GetBytes(-399*(lampIntensityScroll.Value)/100);
             appBoard.WriteLamp(value);
         }
 

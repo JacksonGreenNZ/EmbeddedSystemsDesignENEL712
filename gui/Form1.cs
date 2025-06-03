@@ -45,7 +45,7 @@ namespace gui
                 string[] comPorts = appBoard.getCOMs(); // Get the list of COM ports
                 serialPortStatusLED.On = false;// connection light off
                 datBasStatLED.On = false;//6 weeks later my naming conventions are less verbose
-                
+                disconnectButton.Enabled = false;
                 comPortDropdown.Items.Clear(); // clear any existing items in the ComboBox
 
                 // Add each COM port to the ComboBox
@@ -144,7 +144,6 @@ namespace gui
                     }
                     else
                     {
-                        connectButton.Enabled = true;//turn back on if txcheck fails
                         UIConnectResponse();
                     }
                 });
@@ -152,6 +151,7 @@ namespace gui
             catch (Exception ex)
             {
                 MessageBox.Show($"Error Connecting: {ex.Message}");
+                connectButton.Enabled = true;
             }
         }
 
@@ -159,13 +159,15 @@ namespace gui
         {
             if(appBoard.checkTx()== 0x0F)
             {
-                connectButton.Enabled = false;
                 disconnectButton.Enabled = true;
+                connectButton.Enabled = false;
                 serialPortStatusLED.On = true;
             }
             else
             {
                 MessageBox.Show($"Error Connecting: Wrong byte recieved");
+                connectButton.Enabled = true;//turn back on if txcheck fails
+                disconnectButton.Enabled = false;
             }
         }
 

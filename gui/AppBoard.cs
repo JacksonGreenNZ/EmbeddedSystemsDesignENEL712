@@ -59,10 +59,12 @@ namespace gui
                 }
                 catch (UnauthorizedAccessException ex)
                 {
+                    Disconnect();
                     MessageBox.Show($"Error opening {portName}: {ex.Message}", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
+                    Disconnect();
                     MessageBox.Show($"Error opening {portName}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             });
@@ -79,8 +81,22 @@ namespace gui
         public int checkTx()
         {
             byte[] checkConnect = { startByte, 0x00, stopByte };
-            serialPort.Write(checkConnect, 0, checkConnect.Length);
-            return serialPort.ReadByte();
+            try
+            {
+                serialPort.Write(checkConnect, 0, checkConnect.Length);
+                serialPort.ReadTimeout = 1000; // 1 second timeout
+                return serialPort.ReadByte();
+            }
+            catch (TimeoutException)
+            {
+                Disconnect();
+                return -1;
+            }
+            catch(Exception)
+            {
+                Disconnect() ; 
+                return -2;
+            }
         }
 
         public byte ReadPINA()

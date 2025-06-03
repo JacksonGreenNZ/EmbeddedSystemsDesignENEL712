@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -16,7 +11,6 @@ namespace gui
         public SerialPort serialPort;
         byte startByte = 0x53;
         byte stopByte = 0xAA;
-        private string comPort;
 
         public AppBoard()
         {

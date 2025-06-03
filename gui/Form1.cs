@@ -165,7 +165,7 @@ namespace gui
             }
             else
             {
-                MessageBox.Show($"Error Connecting: Wrong byte recieved");
+                MessageBox.Show($"Error Connecting: Wrong byte recieved - Check COMPort.");
                 connectButton.Enabled = true;//turn back on if txcheck fails
                 disconnectButton.Enabled = false;
             }

@@ -29,6 +29,10 @@ namespace gui
             {
                 try
                 {
+                    serialPort.Parity = Parity.None;
+                    serialPort.DataBits = 8;
+                    serialPort.StopBits = StopBits.One;
+                    serialPort.ReadTimeout = 1000;
                     serialPort.PortName = portName;
                     serialPort.BaudRate = baudRate;
                     serialPort.Open();  // Try to open the port
@@ -78,7 +82,6 @@ namespace gui
             try
             {
                 serialPort.Write(checkConnect, 0, checkConnect.Length);
-                serialPort.ReadTimeout = 1000; // 1 second timeout
                 return serialPort.ReadByte();
             }
             catch (TimeoutException)

@@ -1,19 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
-using System.IO.Ports;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.CodeDom;
 using System.Windows.Forms.DataVisualization.Charting;
 using MySql.Data.MySqlClient;
 
@@ -27,7 +16,6 @@ namespace gui
         private double prev_error;
         private int x;
         MySqlConnection conn;
-        string connString;
         private bool shouldLogData = false;
 
         public Form1()
@@ -196,12 +184,12 @@ namespace gui
                 conn = new MySqlConnection();
                 conn.ConnectionString = connString;
                 conn.Open();
-                MessageBox.Show("Connection Successful");
                 if (conn.State == ConnectionState.Open)
                 {
                     datBasStatLED.On = true;
                     datBDis.Enabled = true;
                     datBCon.Enabled = false;
+                    MessageBox.Show("Connection Successful");
                 }
             }
             catch(MySqlException ex)
@@ -477,9 +465,16 @@ namespace gui
 
         private void enbDatLog_Click(object sender, EventArgs e)
         {
-            shouldLogData = !shouldLogData;
-            enbDatLog.Enabled = false;
-            disDatLog.Enabled = true;
+            if (this.conn != null)
+            {
+                shouldLogData = !shouldLogData;
+                enbDatLog.Enabled = false;
+                disDatLog.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Database not Connected");
+            }
         }
 
         private void disDatLog_Click(object sender, EventArgs e)
@@ -504,26 +499,26 @@ namespace gui
                     }
                 }
                 else
-                {
-                    MessageBox.Show("Database not Connected");
+                { 
                     shouldLogData = !shouldLogData;
                     enbDatLog.Enabled = true;
                     disDatLog.Enabled = false;
+                    MessageBox.Show("Database not Connected");
                 }
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show("MySQL Error: " + ex.Message);
                 shouldLogData = !shouldLogData;
                 enbDatLog.Enabled = true;
                 disDatLog.Enabled = false;
+                MessageBox.Show("MySQL Error: " + ex.Message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
                 shouldLogData = !shouldLogData;
                 enbDatLog.Enabled = true;
                 disDatLog.Enabled = false;
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
     }

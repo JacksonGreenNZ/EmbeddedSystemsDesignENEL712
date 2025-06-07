@@ -423,9 +423,11 @@ namespace gui
                     currentTemp = currentTemp / 0.05;
                     currentTemp = Math.Round(currentTemp, 2);
                     DateTime currentTime = DateTime.Now;
-
+                    string formattedTime = currentTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    string username = usernameBox.Text;
+                    
                     // Insert data to the database
-                    addDataToDatabase(currentTemp, currentTime);
+                    addDataToDatabase(currentTemp, formattedTime, username);
                 }
             }
             catch (Exception ex) {
@@ -484,9 +486,9 @@ namespace gui
             disDatLog.Enabled = false;
         }
 
-        public void addDataToDatabase(double currentTemp, DateTime currentTime)
+        public void addDataToDatabase(double currentTemp, string currentTime, string username)
         {
-            string query = "INSERT INTO temperature (timeStamp, temp) VALUES (@timedata, @tempdata)";
+            string query = "INSERT INTO temperature (timeStamp, temp, remark) VALUES (@timedata, @tempdata, @userdata)";
             try
             {
                 if (this.conn != null)
@@ -495,6 +497,7 @@ namespace gui
                     {
                         cmd.Parameters.AddWithValue("@timedata", currentTime);
                         cmd.Parameters.AddWithValue("@tempdata", currentTemp);
+                        cmd.Parameters.AddWithValue("@userdata", username);
                         cmd.ExecuteNonQuery();
                     }
                 }
